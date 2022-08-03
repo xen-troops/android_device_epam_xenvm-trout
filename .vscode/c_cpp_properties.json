@@ -1,0 +1,56 @@
+{
+    "env": {
+        "android_build_root": "/mnt/android/build/android-12.0.0_r13",
+        "android_source_root": "/mnt/android/source/android-12.0.0_r13"
+    },
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${env:android_build_root}/soong/.intermediates/hardware/interfaces/automotive/vehicle/2.0/android.hardware.automotive.vehicle@2.0_genc++_headers/gen",
+                "${env:android_build_root}/soong/.intermediates/packages/services/Car/cpp/watchdog/aidl/android.automotive.watchdog-V2-ndk_platform-source/gen/include",
+                "${env:android_build_root}/soong/.intermediates/system/libhidl/transport/manager/1.0/android.hidl.manager@1.0_genc++_headers/gen",
+                "${env:android_build_root}/soong/.intermediates/system/libhidl/transport/manager/1.1/android.hidl.manager@1.1_genc++_headers/gen",
+                "${env:android_build_root}/soong/.intermediates/system/libhidl/transport/manager/1.2/android.hidl.manager@1.2_genc++_headers/gen",
+                "${env:android_build_root}/soong/.intermediates/system/libhidl/transport/base/1.0/android.hidl.base@1.0_genc++_headers/gen",
+                "${env:android_source_root}/frameworks/native/libs/binder/ndk/include_platform",
+                "${env:android_source_root}/frameworks/native/libs/binder/ndk/include_ndk",
+                "${env:android_source_root}/frameworks/native/libs/binder/ndk/include_cpp",
+                "${env:android_source_root}/system/core/libcutils/include_outside_system",
+                "${env:android_source_root}/system/unwinding/libbacktrace/include",
+                "${env:android_source_root}/system/core/libprocessgroup/include",
+                "${env:android_source_root}/system/logging/liblog/include_vndk",
+                "${env:android_source_root}/system/libhidl/transport/include",
+                "${env:android_source_root}/system/core/libsystem/include",
+                "${env:android_source_root}/system/core/libcutils/include",
+                "${env:android_source_root}/system/core/libutils/include",
+                "${env:android_source_root}/system/libhwbinder/include",
+                "${env:android_source_root}/system/libhidl/base/include",
+                "${env:android_source_root}/external/libcxxabi/include",
+                "${env:android_source_root}/external/jsoncpp/include",
+                "${env:android_source_root}/system/libbase/include",
+                "${env:android_source_root}/external/fmtlib/include",
+                "${env:android_source_root}/external/protobuf/src",
+                "${env:android_source_root}/system/libfmq/base",
+                "${env:android_source_root}/external/libcxx/include",
+                "${env:android_source_root}/external/tda/carpc/framework",
+                "${env:android_source_root}/external/tda/carpc/tracing",
+                "${env:android_source_root}/external/covesa/someip/vsomeip/interface",
+                "${env:android_source_root}/external/nlohmann/json/include",
+                "${env:android_source_root}/system/libhidl/gtest_helper",
+                "${env:android_source_root}/external/googletest/googletest/include",
+                "${env:android_source_root}/test/vts/runners/target/vts_hal_hidl_target",
+                "${workspaceFolder}/vehicle/hal/common",
+                "${workspaceFolder}/vehicle/hal/impl/components",
+                "${workspaceFolder}/vehicle/hal/impl/production",
+                "${workspaceFolder}/vehicle/dma_plantuml/include"
+            ],
+            "defines": [],
+            "compilerPath": "/bin/clang",
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "linux-clang-x64"
+        }
+    ],
+    "version": 4
+}
