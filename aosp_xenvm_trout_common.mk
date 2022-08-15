@@ -10,5 +10,7 @@ LOCAL_AUDIO_PROPERTIES ?= \
     ro.vendor.caremu.audiohal.out_period_ms=40 \
     ro.vendor.caremu.audiohal.in_period_ms=40 \
 
+LOCAL_VHAL_PRODUCT_PACKAGE ?= android.hardware.automotive.vehicle@2.0-virtualization-service-extended
+
 PRODUCT_PACKAGES += audio.primary.caremu-extended \
                     android.hardware.automotive.vehicle@2.0-virtualization-grpc-server-extended

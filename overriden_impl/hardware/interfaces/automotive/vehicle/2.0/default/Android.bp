@@ -1,0 +1,36 @@
+// Vehicle default VehicleHAL implementation
+cc_library_static {
+    name: "android.hardware.automotive.vehicle@2.0-default-impl-lib-extended",
+    vendor: true,
+    defaults: ["vhal_v2_0_target_defaults"],
+    cflags: ["-DENABLE_VENDOR_CLUSTER_PROPERTY_FOR_TESTING"],
+    srcs: [
+        "impl/vhal_v2_0/CommConn.cpp",
+        "impl/vhal_v2_0/EmulatedVehicleConnector.cpp",
+        "impl/vhal_v2_0/EmulatedVehicleHal.cpp",
+        "impl/vhal_v2_0/VehicleHalClient.cpp",
+        "impl/vhal_v2_0/VehicleHalServer.cpp",
+        "impl/vhal_v2_0/VehicleEmulator.cpp",
+        "impl/vhal_v2_0/PipeComm.cpp",
+        "impl/vhal_v2_0/ProtoMessageConverter.cpp",
+        "impl/vhal_v2_0/SocketComm.cpp",
+        "impl/vhal_v2_0/LinearFakeValueGenerator.cpp",
+        "impl/vhal_v2_0/JsonFakeValueGenerator.cpp",
+        "impl/vhal_v2_0/GeneratorHub.cpp",
+        "impl/vhal_v2_0/qemu_pipe.cpp",
+    ],
+    include_dirs: ["hardware/interfaces/automotive/vehicle/2.0/default/common/include/vhal_v2_0"],
+    export_include_dirs: ["impl"],
+    whole_static_libs: [
+        "android.hardware.automotive.vehicle@2.0-emulated-user-hal-lib",
+        "android.hardware.automotive.vehicle@2.0-manager-lib",
+    ],
+    shared_libs: [
+        "libbase",
+        "libjsoncpp",
+        "libprotobuf-cpp-lite",
+    ],
+    static_libs: [
+        "android.hardware.automotive.vehicle@2.0-libproto-native",
+    ],
+}
