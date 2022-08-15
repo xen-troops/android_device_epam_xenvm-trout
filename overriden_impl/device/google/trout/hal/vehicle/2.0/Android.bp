@@ -36,3 +36,53 @@ cc_binary {
         "android.hardware.automotive.vehicle@2.0-virtualization-grpc-server-lib",
     ],
 }
+
+cc_library_static {
+    name: "android.hardware.automotive.vehicle@2.0-virtualization-client-lib-extended",
+    defaults: ["vhal_v2_0_target_defaults"],
+    vendor: true,
+    srcs: [
+        "GrpcVehicleClient.cpp",
+    ],
+    whole_static_libs: [
+        "android.hardware.automotive.utils.vsockinfo",
+        "android.hardware.automotive.vehicle@2.0-manager-lib",
+        "android.hardware.automotive.vehicle@2.0-default-impl-lib-extended",
+        "android.hardware.automotive.vehicle@2.0-grpc-trout",
+        "android.hardware.automotive.vehicle@2.0-virtualization-utils",
+    ],
+    shared_libs: [
+        "libgrpc++",
+        "libprotobuf-cpp-full",
+    ],
+    export_include_dirs: ["."],
+    cflags: [
+        "-Wno-unused-parameter",
+    ],
+}
+
+cc_binary {
+    name: "android.hardware.automotive.vehicle@2.0-virtualization-service-extended",
+    defaults: ["vhal_v2_0_target_defaults"],
+    init_rc: ["android.hardware.automotive.vehicle@2.0-virtualization-service-extended.rc"],
+    vendor: true,
+    relative_install_path: "hw",
+    srcs: [
+        "VirtualizedVehicleService.cpp",
+    ],
+    shared_libs: [
+        "libbase",
+        "libcutils",
+        "libjsoncpp",
+        "libprotobuf-cpp-full",
+        "libgrpc++",
+    ],
+    static_libs: [
+        "android.hardware.automotive.vehicle@2.0-virtualization-client-lib-extended",
+    ],
+    cflags: [
+        "-Wno-unused-parameter",
+    ],
+    vintf_fragments: ["manifest_android.hardware.automotive.vehicle@2.0-virtualization-service-extended.xml"],
+    include_dirs: ["device/google/trout/hal/vehicle/2.0"],
+}
