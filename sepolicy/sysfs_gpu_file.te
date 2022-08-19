@@ -1,0 +1,6 @@
+allow surfaceflinger sysfs_gpu_trout:dir r_dir_perms;
+allow { appdomain -isolated_app } sysfs_gpu_trout:dir r_dir_perms;
+allow { untrusted_app } sysfs_gpu_trout:dir r_dir_perms;
+
+allow bootanim sysfs_gpu_trout:file r_file_perms;
+allow bootanim sysfs_gpu_trout:dir r_dir_perms;
