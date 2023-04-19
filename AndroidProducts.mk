@@ -19,5 +19,5 @@ PRODUCT_MAKEFILES := \
 	aosp_xenvm_trout_x86:$(LOCAL_DIR)/aosp_xenvm_trout_x86.mk \
 
 COMMON_LUNCH_CHOICES := \
-	aosp_xenvm_trout_arm64-userdebug \
-	aosp_xenvm_trout_x86-userdebug \
+	aosp_xenvm_trout_arm64-eng \
+	aosp_xenvm_trout_x86-eng \
