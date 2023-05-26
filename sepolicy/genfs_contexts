@@ -2,4 +2,4 @@
 genfscon sysfs /devices/pci0000:00/0000:00:04.0 u:object_r:sysfs_gpu_trout:s0
 
 # arm64
-genfscon sysfs /devices/platform/4010000000.pcie/pci0000:00/0000:00:03.0 u:object_r:sysfs_gpu_trout:s0
+genfscon sysfs /devices/platform/10000000.pcie/pci0000:00/0000:00:03.0 u:object_r:sysfs_gpu_trout:s0
