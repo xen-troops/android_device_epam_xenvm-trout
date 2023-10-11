@@ -1,6 +1,2 @@
-
-# Virtualized Vehicle HAL (Server)
-/(vendor|system/vendor)/bin/hw/android\.hardware\.automotive\.vehicle@2\.0-virtualization-grpc-server-extended  u:object_r:hal_vehicle_default_exec:s0
-
 # Virtualized Vehicle HAL (Client)
 /(vendor|system/vendor)/bin/hw/android\.hardware\.automotive\.vehicle@2\.0-virtualization-service-extended  u:object_r:hal_vehicle_default_exec:s0

@@ -12,7 +12,6 @@ LOCAL_AUDIO_PROPERTIES ?= \
 
 LOCAL_VHAL_PRODUCT_PACKAGE ?= android.hardware.automotive.vehicle@2.0-virtualization-service-extended
 
-PRODUCT_PACKAGES += audio.primary.caremu-extended \
-                    android.hardware.automotive.vehicle@2.0-virtualization-grpc-server-extended
+PRODUCT_PACKAGES += audio.primary.caremu-extended
 
 PRODUCT_PACKAGE_OVERLAYS += device/epam/aosp-xenvm-trout/overlay
