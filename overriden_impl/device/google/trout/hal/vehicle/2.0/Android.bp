@@ -16,27 +16,6 @@ package {
     default_applicable_licenses: ["Android-Apache-2.0"],
 }
 
-cc_binary {
-    name: "android.hardware.automotive.vehicle@2.0-virtualization-grpc-server-extended",
-    init_rc: ["android.hardware.automotive.vehicle@2.0-virtualization-grpc-server-extended.rc"],
-    defaults: ["vhal_v2_0_defaults"],
-    host_supported: true,
-    vendor: true,
-    relative_install_path: "hw",
-    srcs: [
-        "VirtualizationGrpcServer.cpp",
-    ],
-    shared_libs: [
-        "libbase",
-        "libjsoncpp",
-        "libprotobuf-cpp-full",
-        "libgrpc++",
-    ],
-    static_libs: [
-        "android.hardware.automotive.vehicle@2.0-virtualization-grpc-server-lib",
-    ],
-}
-
 cc_library_static {
     name: "android.hardware.automotive.vehicle@2.0-virtualization-client-lib-extended",
     defaults: ["vhal_v2_0_target_defaults"],
