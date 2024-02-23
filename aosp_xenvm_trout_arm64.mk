@@ -36,6 +36,7 @@ endif
 #    loglevel=7 \
 #    console=ttyAMA0
 
+LOCAL_OEMLOCK_PRODUCT_PACKAGE := android.hardware.oemlock-service.example
 
 
 $(call inherit-product, device/google/trout/aosp_trout_arm64.mk)
