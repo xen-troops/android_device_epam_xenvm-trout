@@ -1,0 +1,10 @@
+#============= flags_health_check ==============
+allow flags_health_check aac_drc_prop:file { getattr open };
+allow flags_health_check ab_update_gki_prop:file { getattr open };
+allow flags_health_check bluetooth_a2dp_offload_prop:file { getattr open };
+allow flags_health_check bluetooth_audio_hal_prop:file { getattr open };
+allow flags_health_check camera2_extensions_prop:file { getattr open };
+allow flags_health_check cpu_variant_prop:file { getattr open };
+allow flags_health_check ctl_adbd_prop:file { getattr open };
+allow flags_health_check device_logging_prop:file { getattr open };
+allow flags_health_check safemode_prop:file { getattr open };
