@@ -26,12 +26,12 @@ def trout_git_uri(d, remote, name, path, revision):
 
 SRC_URI = "\
     file://${FETCH_CODE_PREFIX}/device/google/trout \
-    ${@trout_git_uri(d, 'ANDROID_REMOTE', 'platform/external/fmtlib', 'third_party/fmtlib', '62f93cae8a2b34c258733674bfbb320ffb37e828')} \
-    ${@trout_git_uri(d, 'ANDROID_REMOTE', 'platform/external/grpc-grpc', 'third_party/grpc-grpc', '8c84d36ef0c626b51697f177906af6992d4a89bd')} \
+    ${@trout_git_uri(d, 'ANDROID_REMOTE', 'platform/external/fmtlib', 'third_party/fmtlib', '75cbc736e0160e1a6b3d841c18e7a65938a7347c')} \
+    ${@trout_git_uri(d, 'ANDROID_REMOTE', 'platform/external/grpc-grpc', 'third_party/grpc-grpc', '8428b748ea53814c5eb4751196f76586571b0146')} \
     ${@trout_git_uri(d, 'ANDROID_REMOTE', 'platform/external/jsoncpp', 'third_party/jsoncpp',   '1b2c7506fd0ea96c1ffa5de4fc0342ceed420416')} \
     ${@trout_git_uri(d, 'ANDROID_REMOTE', 'platform/external/protobuf', 'third_party/protobuf',     '564fd16025f8d7913e19b15dd94ac3fec1bdf999')} \
-    ${@trout_git_uri(d, 'ANDROID_REMOTE', 'platform/hardware/interfaces', 'hardware/interfaces', '27e43a9c18689826f67fc4ba14939fb679d40a47')} \
-    ${@trout_git_uri(d, 'ANDROID_REMOTE', 'platform/system/core', 'third_party/android/system_core', '70ffe2bc893ba769ba6aaeffc4b3686fa4f6dd32')} \
+    ${@trout_git_uri(d, 'ANDROID_REMOTE', 'platform/hardware/interfaces', 'hardware/interfaces', '6e3c5921c4572758e0af20749c9a60f87d9e0746')} \
+    ${@trout_git_uri(d, 'ANDROID_REMOTE', 'platform/system/core', 'third_party/android/system_core', 'de29eec33a2f5cba9cd7b481f8ffe5886f2e5e35')} \
     ${@trout_git_uri(d, 'ANDROID_REMOTE', 'platform/system/libbase', 'third_party/android/libbase', '988723798df152824c20a4d5e13290d4690df00a')} \
     ${@trout_git_uri(d, 'ANDROID_REMOTE', 'platform/system/logging', 'third_party/android/logging', '16ee30b1f2a84dde0d6d3084fb2fc891397e150c')} \
     ${@trout_git_uri(d, 'BORINGSSL_REMOTE', 'boringssl', 'third_party/boringssl', '0b710a305b42b67522003a314dea3e3868485665')} \
@@ -47,7 +47,7 @@ SRC_SYMLINKS = "\
    device/google/trout/agl_services_build/cmake:cmake \
    device/google/trout/agl_services_build/toolchain:toolchain \
    device/google/trout/hal/audiocontrol:audiocontrol \
-   device/google/trout/hal/dumpstate/1.1:dumpstate_server \
+   device/google/trout/hal/dumpstate/aidl/1.0:dumpstate_server \
    device/google/trout/hal/vehicle/2.0:vehicle_hal_server \
    device/google/trout/hal/common/agl/watchdog:watchdog_test_server \
    hardware/interfaces/automotive/vehicle/2.0/default:third_party/default_native_vehicle_hal \
