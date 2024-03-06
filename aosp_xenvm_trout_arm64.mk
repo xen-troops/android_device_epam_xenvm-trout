@@ -44,6 +44,8 @@ LOCAL_OEMLOCK_PRODUCT_PACKAGE := android.hardware.oemlock-service.example
 # prior to device/google/trout/aosp_trout_arm64.mk include
 LOCAL_VHAL_PRODUCT_PACKAGE = android.hardware.automotive.vehicle@2.0-virtualization-service
 
+DEVICE_VIRTWIFI_PORT := eth2
+
 $(call inherit-product, device/google/trout/aosp_trout_arm64.mk)
 
 include device/epam/aosp-xenvm-trout/aosp_xenvm_trout_common.mk
