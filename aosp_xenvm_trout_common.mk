@@ -17,3 +17,5 @@ PRODUCT_COPY_FILES += \
     device/epam/aosp-xenvm-trout/shared/config/fstab.trout_xenvm:$(TARGET_COPY_OUT_RAMDISK)/first_stage_ramdisk/fstab.trout_xenvm
 
 PRODUCT_PACKAGE_OVERLAYS += device/epam/aosp-xenvm-trout/overlay
+
+PRODUCT_VENDOR_PROPERTIES += vendor.ser.gnss-uart=/dev/vport6p2
