@@ -76,7 +76,7 @@ def main():
 
     args = parser.parse_args()
 
-    sk = socket.socket(socket.AF_UNIX, socket.SOCK_SEQPACKET)
+    sk = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
     sk.connect(args.socket)
 
     data = load(args.input)
