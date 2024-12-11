@@ -2,6 +2,8 @@ DESCRIPTION = "Android Automotive OS Virtualization - AGL Services"
 
 TOOLCHAIN = "clang"
 
+SRCREV_FORMAT = "default"
+
 DEPENDS += "\
     google-trout-grpc-utils-native \
     systemd \

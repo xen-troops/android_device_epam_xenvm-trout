@@ -1,5 +1,7 @@
 SUMMARY = "Source code of Trout AGL Services"
 
+SRCREV_FORMAT = "default"
+
 deltask do_configure
 deltask do_compile
 deltask do_install
