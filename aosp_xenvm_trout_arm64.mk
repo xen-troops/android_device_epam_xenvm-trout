@@ -10,6 +10,9 @@ endif
 PRODUCT_COPY_FILES += \
     device/generic/car/common/android.hardware.disable.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.uwb.xml \
 
+PRODUCT_COPY_FILES += \
+    device/epam/aosp-xenvm-trout/init/xenvm_trout.init.rc:$(TARGET_COPY_OUT_PRODUCT)/etc/init/xenvm_trout.init.rc
+
 LOCAL_OEMLOCK_PRODUCT_PACKAGE := android.hardware.oemlock-service.example
 
 # To override VHAL, declare LOCAL_VHAL_PRODUCT_PACKAGE
