@@ -34,4 +34,5 @@
         <!--<item>car_evs_service</item> -->
         <item>car_telemetry_service</item>
     </string-array>
+    <string name="config_userNoticeUiService" translatable="false"/>
 </resources>
