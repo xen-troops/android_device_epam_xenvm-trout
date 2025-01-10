@@ -10,6 +10,8 @@ LOCAL_AUDIO_PROPERTIES ?= \
 
 PRODUCT_PACKAGES += audio.primary.caremu
 
+# Packages that will disable inherited ones
+PRODUCT_PACKAGES += phony_override_packages
 
 PRODUCT_COPY_FILES += \
     device/epam/aosp-xenvm-trout/shared/config/fstab.trout_xenvm:$(TARGET_COPY_OUT_RAMDISK)/fstab.trout_xenvm \

@@ -6,6 +6,10 @@ ifneq ($(TARGET_PREBUILT_KERNEL),)
    TARGET_KERNEL_USE := 6.1
 endif
 
+# Disable UWB HAL
+PRODUCT_COPY_FILES += \
+    device/generic/car/common/android.hardware.disable.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.uwb.xml \
+
 LOCAL_OEMLOCK_PRODUCT_PACKAGE := android.hardware.oemlock-service.example
 
 # To override VHAL, declare LOCAL_VHAL_PRODUCT_PACKAGE
