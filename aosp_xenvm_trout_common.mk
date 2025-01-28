@@ -31,3 +31,5 @@ PRODUCT_PACKAGES += \
         libGLESv2_mesa \
         libgallium_dri \
         libglapi
+
+PRODUCT_PACKAGES += xenvm_overlay_connectivity
