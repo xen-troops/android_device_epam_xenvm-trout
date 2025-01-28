@@ -32,6 +32,8 @@ ENABLE_EVS_SAMPLE := false
 PRODUCT_PACKAGES += \
     com.android.hardware.threadnetwork-simulation-rcp
 
+TARGET_RECOVERY_FSTAB := device/epam/aosp-xenvm-trout/shared/config/fstab.trout_xenvm
+
 PRODUCT_VENDOR_PROPERTIES += \
 	persist.vendor.otsim.local_interface=eth1
 
