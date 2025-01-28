@@ -2,6 +2,7 @@ PRODUCT_SHIPPING_API_LEVEL := 35
 
 BOARD_SEPOLICY_DIRS += device/epam/aosp-xenvm-trout/sepolicy
 
+PRODUCT_PACKAGES += dhcpclient.recovery
 
 LOCAL_AUDIO_PROPERTIES ?= \
     ro.hardware.audio.primary=caremu \
