@@ -3,6 +3,8 @@ include $(CLEAR_VARS)
 
 PHONY_OVERRIDE_PACKAGES := \
    com.android.hardware.uwb \
+   android.hardware.automotive.audiocontrol-service.example \
+   android.hardware.automotive.audiocontrol-service.trout
 
 LOCAL_MODULE := phony_override_packages
 LOCAL_MODULE_TAGS := optional
