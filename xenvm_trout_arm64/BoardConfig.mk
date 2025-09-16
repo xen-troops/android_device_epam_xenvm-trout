@@ -22,9 +22,11 @@ SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += device/epam/aosp-xenvm-trout/sepolicy/privat
 
 BOARD_BOOTCONFIG := androidboot.fstab_name=fstab
 BOARD_BOOTCONFIG += androidboot.fstab_suffix=trout_xenvm
+BOARD_BOOTCONFIG += androidboot.boot_devices=passthrough/16a003e00.virtio_mmio
 BOARD_BOOTCONFIG += androidboot.vendor.apex.com.android.hardware.keymint=com.android.hardware.keymint.rust_nonsecure
 BOARD_BOOTCONFIG += androidboot.vendor.apex.com.android.hardware.gatekeeper=com.android.hardware.gatekeeper.nonsecure
-BOARD_BOOTCONFIG += androidboot.vendor.vehiclehal.server.cid=2
+#Using the local GRPC vehicle server that running on the same VM as the client VMADDR_CID_LOCAL
+BOARD_BOOTCONFIG += androidboot.vendor.vehiclehal.server.cid=1
 BOARD_BOOTCONFIG += androidboot.vendor.vehiclehal.server.port=9210
 BOARD_BOOTCONFIG += androidboot.vendor.vehiclehal.server.psf=/data/data/power.file
 BOARD_BOOTCONFIG += androidboot.vendor.vehiclehal.server.pss=/data/data/power.socket
@@ -32,7 +34,7 @@ BOARD_BOOTCONFIG += androidboot.selinux=permissive
 BOARD_BOOTCONFIG += androidboot.android_dt_dir=/proc/device-tree/firmware#1/android/
 BOARD_BOOTCONFIG += kernel.vmw_vsock_virtio_transport_common.virtio_transport_max_vsock_pkt_buf_size=16384
 BOARD_BOOTCONFIG += androidboot.load_modules_parallel=true
-BOARD_BOOTCONFIG += androidboot.enable_bootanimation=0
+BOARD_BOOTCONFIG += androidboot.enable_bootanimation=1
 BOARD_BOOTCONFIG += androidboot.lcd_density=160
 BOARD_BOOTCONFIG += androidboot.hardware.hwcomposer=ranchu
 BOARD_BOOTCONFIG += androidboot.hardware.hwcomposer.mode=client
@@ -60,6 +62,10 @@ BOARD_KERNEL_CMDLINE += panic=-1
 BOARD_KERNEL_CMDLINE += 8250.nr_uarts=1
 
 BOARD_VENDOR_SEPOLICY_DIRS += device/google/cuttlefish/shared/virgl/sepolicy
+# vendor sepolicy
+BOARD_VENDOR_SEPOLICY_DIRS += device/google/cuttlefish/shared/sepolicy/vendor
+BOARD_VENDOR_SEPOLICY_DIRS += device/google/cuttlefish/shared/sepolicy/vendor/seriallogging
+BOARD_VENDOR_SEPOLICY_DIRS += device/google/cuttlefish/shared/sepolicy/vendor/google
 
 # Use virgl and mesa3d upstream
 BOARD_MESA3D_USES_MESON_BUILD := true

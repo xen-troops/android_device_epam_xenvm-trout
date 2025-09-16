@@ -1,3 +1,17 @@
+# Prevent early service failures and system timeout
+on early-init
+    # Disable Bluetooth to prevent GceEventReporter boot blocking
+    setprop ro.config.disable_bluetooth true
+    setprop persist.vendor.bluetooth.enable false
+    setprop bluetooth.enable false
+    # Set automotive theme properties early to help resource resolution
+    setprop ro.boot.automotive 1
+    setprop persist.sys.ui.automotive_theme true
 
-on property:sys.boot_completed=1
+# Stop seriallogging if it starts (using proper init command)
+on property:init.svc.seriallogging=running
+    stop seriallogging
+
+# Prevent seriallogging restart
+on property:init.svc.seriallogging=restarting
     stop seriallogging
