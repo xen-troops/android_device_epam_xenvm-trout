@@ -40,7 +40,7 @@ BOARD_BOOTCONFIG += androidboot.hardware.hwcomposer=ranchu
 BOARD_BOOTCONFIG += androidboot.hardware.hwcomposer.mode=client
 BOARD_BOOTCONFIG += androidboot.hardware.hwcomposer.display_finder_mode=drm
 BOARD_BOOTCONFIG += androidboot.hardware.gralloc=minigbm
-BOARD_BOOTCONFIG += androidboot.hardware.egl=mesa androidboot.boot_devices=33000000.pcie
+BOARD_BOOTCONFIG += androidboot.hardware.egl=mesa
 BOARD_BOOTCONFIG += androidboot.openthread_node_id=1
 
 # Reuse trout androidboot properties
