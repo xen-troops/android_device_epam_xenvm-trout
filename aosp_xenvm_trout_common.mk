@@ -4,7 +4,7 @@ BOARD_SEPOLICY_DIRS += device/epam/aosp-xenvm-trout/sepolicy
 
 
 LOCAL_AUDIO_PROPERTIES ?= \
-    ro.hardware.audio.primary=caremu \
+    ro.hardware.audio.primary=caremu-ext \
     ro.vendor.caremu.audiohal.out_period_ms=40 \
     ro.vendor.caremu.audiohal.in_period_ms=40 \
 
