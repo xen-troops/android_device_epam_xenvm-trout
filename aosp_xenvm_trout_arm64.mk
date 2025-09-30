@@ -17,7 +17,7 @@ LOCAL_OEMLOCK_PRODUCT_PACKAGE := android.hardware.oemlock-service.example
 
 # To override VHAL, declare LOCAL_VHAL_PRODUCT_PACKAGE
 # prior to device/google/trout/aosp_trout_arm64.mk include
-LOCAL_VHAL_PRODUCT_PACKAGE = android.hardware.automotive.vehicle@2.0-default-service
+LOCAL_VHAL_PRODUCT_PACKAGE = android.hardware.automotive.vehicle@2.0-virtualization-service
 
 DEVICE_VIRTWIFI_PORT := eth0
 
