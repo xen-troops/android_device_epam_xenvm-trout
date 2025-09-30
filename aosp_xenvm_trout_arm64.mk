@@ -37,6 +37,10 @@ TARGET_RECOVERY_FSTAB := device/epam/aosp-xenvm-trout/shared/config/fstab.trout_
 PRODUCT_VENDOR_PROPERTIES += \
 	persist.vendor.otsim.local_interface=eth1
 
+# Testing tool for vhost-vsock
+PRODUCT_PACKAGES += \
+    lisot
+
 $(call inherit-product, device/google/cuttlefish/shared/virgl/device_vendor.mk)
 $(call inherit-product, device/google/trout/aosp_trout_arm64.mk)
 $(call inherit-product, device/epam/aosp-xenvm-trout/aosp_xenvm_trout_common.mk)
