@@ -2,6 +2,13 @@ DESCRIPTION = "Android Automotive OS Virtualization - AGL Services"
 
 TOOLCHAIN = "clang"
 
+TARGET_CFLAGS:append = " -Wno-error=vla-cxx-extension"
+TARGET_CXXFLAGS:append = " -Wno-error=vla-cxx-extension"
+TARGET_CFLAGS:append = " -Wno-error=array-parameter"
+TARGET_CXXFLAGS:append = " -Wno-error=array-parameter"
+TARGET_CFLAGS:append = " -Wno-error=unused-but-set-variable"
+TARGET_CXXFLAGS:append = " -Wno-error=deprecated-declarations"
+
 SRCREV_FORMAT = "default"
 
 DEPENDS += "\
