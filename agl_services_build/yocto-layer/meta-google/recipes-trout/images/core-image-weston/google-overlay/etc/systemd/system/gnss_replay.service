@@ -1,6 +1,6 @@
 [Unit]
 Description=Mock GNSS Host Agent
-After=coqos-virtio-console.service
+After=multi-user.target
 
 [Service]
 ExecStartPre=/bin/sh -c 'while [ ! -e /run/gnss-uart ]; do sleep 0.2; done'
