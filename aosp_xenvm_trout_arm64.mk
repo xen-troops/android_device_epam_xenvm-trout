@@ -6,6 +6,10 @@ ifneq ($(TARGET_PREBUILT_KERNEL),)
    TARGET_KERNEL_USE := 6.1
 endif
 
+# Configure single touch device
+PRODUCT_COPY_FILES += \
+    device/epam/aosp-xenvm-trout/conf/Vendor_0627_Product_0003.idc:$(TARGET_COPY_OUT_VENDOR)/usr/idc/Vendor_0627_Product_0003.idc
+
 # Disable UWB HAL
 PRODUCT_COPY_FILES += \
     device/generic/car/common/android.hardware.disable.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.uwb.xml \
