@@ -1,0 +1,4 @@
+#============= service ==============
+type car_service, service_manager_type;
+type vms_service, service_manager_type;
+

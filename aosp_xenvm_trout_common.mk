@@ -1,6 +1,8 @@
 PRODUCT_SHIPPING_API_LEVEL := 35
 
 BOARD_SEPOLICY_DIRS += device/epam/aosp-xenvm-trout/sepolicy
+BOARD_SEPOLICY_DIRS += device/epam/aosp-xenvm-trout/sepolicy/vendor
+
 
 PRODUCT_PACKAGES += dhcpclient.recovery
 

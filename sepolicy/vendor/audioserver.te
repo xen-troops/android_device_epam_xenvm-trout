@@ -1,0 +1,4 @@
+userdebug_or_eng(`
+    dontaudit audioserver debugfs_tracing:file { open read write };
+')
+
