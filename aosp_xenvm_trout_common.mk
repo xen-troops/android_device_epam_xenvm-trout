@@ -9,7 +9,7 @@ LOCAL_AUDIO_PROPERTIES ?= \
     ro.vendor.caremu.audiohal.out_period_ms=40 \
     ro.vendor.caremu.audiohal.in_period_ms=40 \
 
-PRODUCT_PACKAGES += audio.primary.caremu
+PRODUCT_PACKAGES += audio.primary.caremu-ext
 
 # Packages that will disable inherited ones
 PRODUCT_PACKAGES += phony_override_packages
