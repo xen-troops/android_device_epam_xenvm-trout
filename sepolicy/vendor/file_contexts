@@ -1,0 +1,121 @@
+# Block devices labeling
+/dev/block/mmcblk0                                                              u:object_r:root_block_device:s0
+
+# Console device
+/dev/ttySC0                                                                     u:object_r:tty_device:s0
+
+# graphics
+/vendor/bin/pvrsrvctl                                                           u:object_r:pvrsrvctl_exec:s0
+/vendor/lib(64)?/libAppHintsIPC.so                                              u:object_r:same_process_hal_file:s0
+/vendor/lib(64)?/vendor.imagination.gpu.apphints@1.0.so                         u:object_r:same_process_hal_file:s0
+/vendor/lib(64)?/libIMGegl.so                                                   u:object_r:same_process_hal_file:s0
+/vendor/lib(64)?/libPVRRS.so                                                    u:object_r:same_process_hal_file:s0
+/vendor/lib(64)?/libPVRScopeServices.so                                         u:object_r:same_process_hal_file:s0
+/vendor/lib(64)?/libglslcompiler.so                                             u:object_r:same_process_hal_file:s0
+/vendor/lib(64)?/libsrv_um.so                                                   u:object_r:same_process_hal_file:s0
+/vendor/lib(64)?/libtqvalidate.so                                               u:object_r:same_process_hal_file:s0
+/vendor/lib(64)?/libusc.so                                                      u:object_r:same_process_hal_file:s0
+/vendor/lib(64)?/libdrmutils.so                                                 u:object_r:same_process_hal_file:s0
+#/vendor/lib(64)?/libdrm.so                                                      u:object_r:same_process_hal_file:s0
+/vendor/lib(64)?/libeffects.so                                                  u:object_r:same_process_hal_file:s0
+/vendor/lib(64)?/libeffectsconfig.so                                            u:object_r:same_process_hal_file:s0
+/vendor/lib(64)?/libufwriter.so                                                 u:object_r:same_process_hal_file:s0
+/vendor/lib(64)?/hw/android.hardware.graphics.allocator@2.0-impl.so             u:object_r:same_process_hal_file:s0
+/vendor/lib(64)?/hw/android.hardware.graphics.allocator@3.0-impl.xenvm_trout_arm64.so       u:object_r:same_process_hal_file:s0
+/vendor/lib(64)?/hw/android.hardware.graphics.mapper@2.0-impl.so                u:object_r:same_process_hal_file:s0
+/vendor/lib(64)?/hw/android.hardware.memtrack@1.0-impl.so                       u:object_r:same_process_hal_file:s0
+/vendor/lib(64)?/hw/android.hardware.renderscript@1.0-impl.so                   u:object_r:same_process_hal_file:s0
+/vendor/lib(64)?/hw/gralloc.xenvm_trout_arm64.so                                            u:object_r:same_process_hal_file:s0
+/vendor/lib(64)?/hw/memtrack.xenvm_trout_arm64.so                                           u:object_r:same_process_hal_file:s0
+/vendor/lib(64)?/hw/mapper.powervr.so                                           u:object_r:same_process_hal_file:s0
+/vendor/lib(64)?/hw/vulkan.powervr.so                                           u:object_r:same_process_hal_file:s0
+
+# sync drivers
+/dev/pvr_sync                                                                   u:object_r:gpu_device:s0
+/dev/sw_sync                                                                    u:object_r:gpu_device:s0
+
+# drm device nodes
+/dev/dri/controlD64                                                             u:object_r:gpu_device:s0
+/dev/dri/card1                                                                  u:object_r:gpu_device:s0
+/dev/dri/controlD65                                                             u:object_r:gpu_device:s0
+
+
+/vendor/bin/hw/android.hardware.composer.hwc3-service.img			u:object_r:hal_graphics_composer_default_exec:s0
+/vendor/bin/hw/android.hardware.memtrack@1.0-service                            u:object_r:hal_memtrack_default_exec:s0
+/vendor/bin/hw/android.hardware.memtrack-service.img                            u:object_r:hal_memtrack_default_exec:s0
+/vendor/bin/hw/android.hardware.automotive.vehicle@2.0-service.xenvm_trout_arm64            u:object_r:hal_vehicle_default_exec:s0
+/vendor/bin/hw/android.hardware.thermal@1.0-service                             u:object_r:hal_thermal_default_exec:s0
+/vendor/bin/hw/android.hardware.dumpstate@1.0-service                           u:object_r:hal_dumpstate_default_exec:s0
+/vendor/bin/hw/android.hardware.keymaster@3.0-service.optee                     u:object_r:hal_keymaster_optee_exec:s0
+/vendor/bin/hw/android.hardware.gatekeeper@1.0-service.software                 u:object_r:hal_gatekeeper_optee_exec:s0
+/vendor/bin/hw/android.hardware.sensors@1.0-service.xenvm_trout_arm64                       u:object_r:hal_sensors_default_exec:s0
+/vendor/bin/hw/android.hardware.health@2.0-service.xenvm_trout_arm64                        u:object_r:hal_health_default_exec:s0
+/vendor/bin/hw/android.hardware.graphics.allocator@3.0-service.xenvm_trout_arm64            u:object_r:hal_graphics_allocator_default_exec:s0
+/vendor/bin/hw/android.hardware.media.c2@1.0-service.renesas                    u:object_r:hal_codec2_vendor_exec:s0
+
+# optee
+/dev/tee0                                                                       u:object_r:tee_device:s0
+/dev/teepriv0                                                                   u:object_r:tee_device:s0
+/vendor/bin/tee-supplicant                                                      u:object_r:tee_exec:s0
+#/vendor/bin/tee-supp                                                            u:object_r:tee_exec:s0
+
+# audio
+/vendor/lib(64)?/hw/android.hardware.audio@2.0-impl.so                          u:object_r:same_process_hal_file:s0
+/vendor/lib(64)?/hw/audio.r_submix.default.so                                   u:object_r:same_process_hal_file:s0
+
+# evs
+#/vendor/bin/android\.hardware\.automotive\.evs@1\.[0-9]+\.xt                    u:object_r:hal_evs_driver_exec:s0
+#/system/bin/evs_app-xt                                                           u:object_r:evs_app_exec:s0
+#/vendor/etc/automotive/evs(/.*)?                                                u:object_r:evs_app_files:s0
+/system/bin/evsmanagerd-xt                                                       u:object_r:evsmanagerd_exec:s0
+
+
+# Memory manager devices
+/dev/rgnmm                                                                      u:object_r:mmngr_device:s0
+/dev/rgnmmbuf                                                                   u:object_r:mmngr_device:s0
+
+# UVCS
+/dev/uvcs                                                                       u:object_r:uvcs_device:s0
+
+# VSPM
+/dev/vspm_if                                                                    u:object_r:vspm_device:s0
+
+# Audio policy
+/vendor/bin/hw/android.hardware.automotive.audiocontrol@1.0-service.renesas     u:object_r:hal_audiocontrol_default_exec:s0
+
+# Audio
+/vendor/bin/hw/android.hardware.audio.effect@6.0-service.renesas                u:object_r:hal_audio_default_exec:s0
+/vendor/bin/hw/android.hardware.audio@6.0-service.renesas                       u:object_r:hal_audio_default_exec:s0
+
+# Same process HALs installed by platform into /vendor
+/vendor/lib(64)?/hw/audio.primary.xenvm_trout_arm64.so                                   u:object_r:same_process_hal_file:s0
+/vendor/lib(64)?/hw/audio.r_submix.xenvm_trout_arm64.so                                  u:object_r:same_process_hal_file:s0
+
+
+
+##################
+# same process hal
+##################
+/vendor/lib(64)?/libIMGegl\.so       u:object_r:same_process_hal_file:s0
+/vendor/lib(64)?/libsrv_um\.so       u:object_r:same_process_hal_file:s0
+/vendor/lib(64)?/libusc\.so          u:object_r:same_process_hal_file:s0
+/vendor/lib(64)?/libglslcompiler\.so u:object_r:same_process_hal_file:s0
+/vendor/lib(64)?/libtqvalidate\.so   u:object_r:same_process_hal_file:s0
+/vendor/lib(64)?/libufwriter\.so     u:object_r:same_process_hal_file:s0
+/vendor/lib(64)?/libdrm\.so          u:object_r:same_process_hal_file:s0
+/vendor/lib(64)?/libPVROCL\.so       u:object_r:same_process_hal_file:s0
+/vendor/lib(64)?/libpvrANDROID_WSEGL\.so u:object_r:same_process_hal_file:s0
+/vendor/lib(64)?/hw/android\.hardware\.graphics\.mapper@2\.0-impl-2\.1.so u:object_r:same_process_hal_file:s0
+/vendor/lib(64)?/hw/android\.hardware\.vr@1\.0-impl.so u:object_r:same_process_hal_file:s0
+# PVR Mapper
+/vendor/lib(64)?/libpvr_mapper_utils\.so                                         u:object_r:same_process_hal_file:s0
+/vendor/lib(64)?/vendor\.img\.powervr\.mapper\@4\.0\.so                  u:object_r:same_process_hal_file:s0
+/vendor/lib(64)?/hw/vendor\.img\.powervr\.mapper\@4\.0\-impl\.so u:object_r:same_process_hal_file:s0
+# IPC apphints driver
+/vendor/lib(64)?/libAppHintsIPC\.so  u:object_r:same_process_hal_file:s0
+/vendor/lib(64)?/vendor\.imagination\.gpu\.apphints@1\.0\.so u:object_r:same_process_hal_file:s0
+# Renderscript driver
+/vendor/lib(64)?/libPVRRS\.so        u:object_r:same_process_hal_file:s0
+/vendor/bin/bcc                      u:object_r:same_process_hal_file:s0
+/vendor/bin/rscompiler               u:object_r:same_process_hal_file:s0
+

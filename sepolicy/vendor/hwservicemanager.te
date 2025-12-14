@@ -1,0 +1,4 @@
+#============= hwservicemanager ==============
+userdebug_or_eng(`
+  dontaudit hwservicemanager debugfs_tracing_debug:filesystem mount;
+')

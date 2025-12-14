@@ -1,0 +1,6 @@
+#============= update_verifier ==============
+allow update_verifier sysfs:dir read;
+
+userdebug_or_eng(`
+    dontaudit update_verifier sysfs:file { getattr open read };
+')
