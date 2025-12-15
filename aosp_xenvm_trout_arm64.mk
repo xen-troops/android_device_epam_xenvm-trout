@@ -6,6 +6,9 @@ ifneq ($(TARGET_PREBUILT_KERNEL),)
    TARGET_KERNEL_USE := 6.1
 endif
 
+PRODUCT_SYSTEM_EXT_PROPERTIES += \
+   dalvik.vm.usejit=false \
+
 # Configure single touch device
 PRODUCT_COPY_FILES += \
     device/epam/aosp-xenvm-trout/conf/Vendor_0627_Product_0003.idc:$(TARGET_COPY_OUT_VENDOR)/usr/idc/Vendor_0627_Product_0003.idc
