@@ -173,6 +173,7 @@ PRODUCT_PACKAGES += \
     mapper.powervr \
     vulkan.powervr
 
+PRODUCT_VENDOR_PROPERTIES += vendor.hwc.backend_override=client
 
 # Graphics composer HIDL HAL (service added below)
 PRODUCT_PACKAGES += \
