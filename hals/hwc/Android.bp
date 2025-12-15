@@ -1,0 +1,14 @@
+cc_library_shared {
+    name: "hwcomposer.xenvm_trout_arm64",
+    vintf_fragments: ["hwc.xml"],
+    overrides: ["com.android.hardware.graphics.composer.ranchu"],
+    defaults: ["hwcomposer.drm_defaults"],
+    srcs: [":drm_hwcomposer_platformimagination"],
+    whole_static_libs: ["drm_hwcomposer"],
+    include_dirs: [
+        "device/epam/aosp-xenvm-trout/hals/hwc/include",
+    ],
+    cppflags: [
+	"-DENABLE_GEM_HANDLE_CACHING",
+    ],
+}
