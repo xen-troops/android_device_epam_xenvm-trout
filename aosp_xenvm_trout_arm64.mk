@@ -185,6 +185,10 @@ PRODUCT_PACKAGES += \
     android.hardware.dumpstate@1.1 \
     android.hardware.dumpstate@1.1.vendor
 
+ # Testing tool for for display
+ PRODUCT_PACKAGES += \
+    modetest \
+
 LOCAL_DEVICE_FCM_MANIFEST_FILE = device/epam/aosp-xenvm-trout/manifest.xml
 
 $(call inherit-product, device/epam/aosp-xenvm-trout/build/graphics.mk)
