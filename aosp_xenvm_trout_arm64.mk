@@ -180,6 +180,8 @@ PRODUCT_PACKAGES += \
     android.hardware.graphics.composer@2.1.vendor \
     android.hardware.graphics.composer@2.1-impl
 
+PRODUCT_DEFAULT_PROPERTY_OVERRIDES += ro.surface_flinger.max_frame_buffer_acquired_buffers=3
+
 # Dumpstate
 PRODUCT_PACKAGES += \
     android.hardware.dumpstate@1.1 \
