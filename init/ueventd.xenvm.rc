@@ -18,3 +18,4 @@
 /dev/v4l-subdev2        0666    media           media
 /dev/v4l-subdev3        0666    media           media
 /dev/bus/usb/001/005    0666    bluetooth       bluetooth
+/dev/dma_heap/rvgc_region  0666    system       system
