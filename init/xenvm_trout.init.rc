@@ -1,3 +1,13 @@
+service dfw /system/bin/sh /vendor/etc/init/displ_fe.sh
+    class main
+    user root
+    group root
+    oneshot
+    disabled
+    seclabel u:r:su:s0
+
+on init
+    start dfw
 
 on property:sys.boot_completed=1
     stop seriallogging

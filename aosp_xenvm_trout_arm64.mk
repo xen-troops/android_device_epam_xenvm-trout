@@ -189,6 +189,10 @@ PRODUCT_PACKAGES += \
  PRODUCT_PACKAGES += \
     modetest \
 
+PRODUCT_COPY_FILES += \
+    vendor/prebuilts/renesas/firmware/disfwk.elf:$(TARGET_COPY_OUT_VENDOR)/firmware/disfwk.elf \
+    device/epam/aosp-xenvm-trout/init/displ_fe.sh:$(TARGET_COPY_OUT_VENDOR)/etc/init/displ_fe.sh \
+
 LOCAL_DEVICE_FCM_MANIFEST_FILE = device/epam/aosp-xenvm-trout/manifest.xml
 
 $(call inherit-product, device/epam/aosp-xenvm-trout/build/graphics.mk)
