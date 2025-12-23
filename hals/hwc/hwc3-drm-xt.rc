@@ -1,0 +1,8 @@
+service vendor.hwcomposer-3 /vendor/bin/hw/hwc3.sh
+    class hal animation
+    interface aidl android.hardware.graphics.composer3.IComposer/default
+    user system
+    group graphics drmrpc
+    capabilities SYS_NICE
+    onrestart restart surfaceflinger
+    task_profiles ServiceCapacityLow

@@ -54,12 +54,9 @@ PRODUCT_VENDOR_PROPERTIES += \
 PRODUCT_PACKAGES += \
     lisot
 
-# Composer 2.3
+# Hwcomposer
 PRODUCT_PACKAGES += \
-    android.hardware.graphics.composer@2.3-hal \
-    android.hardware.graphics.composer@2.3-passthrough \
-    android.hardware.graphics.composer@2.3-service \
-    hwcomposer.xenvm_trout_arm64 \
+    android.hardware.composer.hwc3-service.drm.xt \
 
 # Img deps
 PRODUCT_PACKAGES += \
@@ -193,7 +190,8 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_COPY_FILES += \
     vendor/prebuilts/renesas/firmware/disfwk.elf:$(TARGET_COPY_OUT_VENDOR)/firmware/disfwk.elf \
-    device/epam/aosp-xenvm-trout/init/displ_fe.sh:$(TARGET_COPY_OUT_VENDOR)/etc/init/displ_fe.sh \
+    device/epam/aosp-xenvm-trout/bin/dfw.sh:$(TARGET_COPY_OUT_VENDOR)/bin/dfw.sh \
+    device/epam/aosp-xenvm-trout/bin/hwc3.sh:$(TARGET_COPY_OUT_VENDOR)/bin/hw/hwc3.sh \
 
 LOCAL_DEVICE_FCM_MANIFEST_FILE = device/epam/aosp-xenvm-trout/manifest.xml
 
