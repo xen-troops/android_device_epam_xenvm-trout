@@ -36,7 +36,6 @@ BOARD_BOOTCONFIG += androidboot.selinux=permissive
 BOARD_BOOTCONFIG += androidboot.android_dt_dir=/proc/device-tree/firmware#1/android/
 BOARD_BOOTCONFIG += kernel.vmw_vsock_virtio_transport_common.virtio_transport_max_vsock_pkt_buf_size=16384
 BOARD_BOOTCONFIG += androidboot.load_modules_parallel=true
-BOARD_BOOTCONFIG += androidboot.enable_bootanimation=0
 BOARD_BOOTCONFIG += androidboot.lcd_density=160
 BOARD_BOOTCONFIG += androidboot.hardware.hwcomposer=xenvm_trout_arm64
 BOARD_BOOTCONFIG += androidboot.hardware.hwcomposer.mode=client
