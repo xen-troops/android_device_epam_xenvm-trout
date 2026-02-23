@@ -13,7 +13,6 @@ dontaudit flags_health_check adbd_config_prop:file open;
 dontaudit flags_health_check apexd_config_prop:file { getattr map open };
 dontaudit flags_health_check apexd_config_prop:file { getattr open };
 dontaudit flags_health_check apexd_prop:file { getattr map open };
-dontaudit flags_health_check apk_verity_prop:file { getattr map open };
 dontaudit flags_health_check audio_config_prop:file { getattr map open };
 dontaudit flags_health_check bluetooth_a2dp_offload_prop:file map;
 dontaudit flags_health_check bluetooth_audio_hal_prop:file map;
