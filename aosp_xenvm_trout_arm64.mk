@@ -195,6 +195,7 @@ PRODUCT_COPY_FILES += \
     device/epam/aosp-xenvm-trout/bin/hwc3.sh:$(TARGET_COPY_OUT_VENDOR)/bin/hw/hwc3.sh \
 
 LOCAL_DEVICE_FCM_MANIFEST_FILE = device/epam/aosp-xenvm-trout/manifest.xml
+DEVICE_PRODUCT_COMPATIBILITY_MATRIX_FILE += device/epam/aosp-xenvm-trout/compatibility_matrix.xml
 
 $(call inherit-product, device/epam/aosp-xenvm-trout/build/graphics.mk)
 $(call inherit-product, device/google/cuttlefish/shared/virgl/device_vendor.mk)
