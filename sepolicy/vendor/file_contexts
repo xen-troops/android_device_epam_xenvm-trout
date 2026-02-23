@@ -36,7 +36,6 @@
 
 # drm device nodes
 /dev/dri/controlD64                                                             u:object_r:gpu_device:s0
-/dev/dri/card1                                                                  u:object_r:gpu_device:s0
 /dev/dri/controlD65                                                             u:object_r:gpu_device:s0
 
 /vendor/bin/hw/hwc3.sh                                                          u:object_r:hal_graphics_composer_default_exec:s0
@@ -67,7 +66,6 @@
 #/vendor/bin/android\.hardware\.automotive\.evs@1\.[0-9]+\.xt                    u:object_r:hal_evs_driver_exec:s0
 #/system/bin/evs_app-xt                                                           u:object_r:evs_app_exec:s0
 #/vendor/etc/automotive/evs(/.*)?                                                u:object_r:evs_app_files:s0
-/system/bin/evsmanagerd-xt                                                       u:object_r:evsmanagerd_exec:s0
 
 
 # Memory manager devices
