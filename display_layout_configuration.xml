@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
+<layouts>
+    <layout>
+        <!-- Use the default state -->
+        <state>-1</state>
+
+        <display enabled="true" defaultDisplay="true">
+          <address>0</address>
+        </display>
+
+        <display enabled="true" defaultDisplay="false" displayGroup="passenger_display">
+          <address>1</address>
+        </display>
+    </layout>
+</layouts>
