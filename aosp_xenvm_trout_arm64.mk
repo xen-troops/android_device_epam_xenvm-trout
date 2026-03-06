@@ -188,10 +188,43 @@ PRODUCT_PACKAGES += \
  PRODUCT_PACKAGES += \
     modetest \
 
+# Display driver
 PRODUCT_COPY_FILES += \
     vendor/prebuilts/renesas/firmware/disfwk.elf:$(TARGET_COPY_OUT_VENDOR)/firmware/disfwk.elf \
     device/epam/aosp-xenvm-trout/bin/dfw.sh:$(TARGET_COPY_OUT_VENDOR)/bin/dfw.sh \
-    device/epam/aosp-xenvm-trout/bin/hwc3.sh:$(TARGET_COPY_OUT_VENDOR)/bin/hw/hwc3.sh \
+    device/epam/aosp-xenvm-trout/bin/hwc3.sh:$(TARGET_COPY_OUT_VENDOR)/bin/hw/hwc3.sh
+
+# Display settings for multi-display support
+# Must be before the emulator's vendor.mk.
+PRODUCT_COPY_FILES += \
+    device/epam/aosp-xenvm-trout/display_settings.xml:$(TARGET_COPY_OUT_VENDOR)/etc/display_settings.xml
+
+# Display layout for multi-display support
+# Must be before the emulator's vendor.mk.
+PRODUCT_COPY_FILES += \
+    device/epam/aosp-xenvm-trout/display_layout_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/displayconfig/display_layout_configuration.xml
+
+# Display permissions for multi-display support
+PRODUCT_COPY_FILES += \
+    frameworks/native/data/etc/android.software.activities_on_secondary_displays.xml:system/etc/permissions/android.software.activities_on_secondary_displays.xml
+
+# CarService RRO overlay for multi-display support
+PRODUCT_PACKAGES += CarServiceOverlayXenVm
+# Default launcher package for secondary display for multi-display and multi-user support
+PRODUCT_PACKAGES += com.android.car.carlauncher
+
+# ---- Multi-display / Multi-user (UserPicker) configuration ----
+# Enable visible background users on secondary displays.
+# This is the key property that gates UserPicker, CarUserService callbacks,
+# and the entire multi-user-on-multi-display feature.
+# The overlay sets config_multiuserVisibleBackgroundUsers=true, but we also
+# set the system property explicitly to ensure it takes effect early at boot
+# (before Resources.getSystem() overlay application).
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += fw.visible_bg_users=true
+
+# Auto-populate 1 passenger user so display 1 shows UserPicker at boot
+# (same as Cuttlefish auto_md reference)
+# PRODUCT_SYSTEM_DEFAULT_PROPERTIES += com.android.car.internal.debug.num_auto_populated_users=1
 
 LOCAL_DEVICE_FCM_MANIFEST_FILE = device/epam/aosp-xenvm-trout/manifest.xml
 
