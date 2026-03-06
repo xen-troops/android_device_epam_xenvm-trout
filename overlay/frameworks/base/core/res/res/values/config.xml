@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- frameworks/base/core/res/res/values/config.xml -->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!--  Maximum number of supported users -->
+    <integer name="config_multiuserMaximumUsers">8</integer>
+    <!-- Maximum number of users we allow to be running at a time -->
+    <integer name="config_multiuserMaxRunningUsers">8</integer>
+    <!--  Whether Multiuser UI should be shown -->
+    <bool name="config_enableMultiUserUI">true</bool>
+
+    <!-- Whether the device allows full users to start in background visible on displays.
+    Should be false for most devices, except automotive vehicle with passenger displays.
+    Note: this flag does NOT control the Communal Profile, which is not a full user. -->
+    <bool name="config_multiuserVisibleBackgroundUsers">true</bool>
+
+    <!-- Whether the device allows users to start in background visible on the default display.
+        Should be false for all devices in production. Can be enabled only for development use
+        in passenger-only automotive build (i.e., when Android runs in a separate system in the
+        back seat to manage the passenger displays).
+        When set to true, config_multiuserVisibleBackgroundUsers must also be true. -->
+    <!-- <bool name="config_multiuserVisibleBackgroundUsersOnDefaultDisplay">true</bool> -->
+
+    <!-- True if the device supports running activities on secondary displays. -->
+    <bool name="config_supportsMultiDisplay">true</bool>
+
+    <!-- True if the device supports system decorations on secondary displays. -->
+    <bool name="config_supportsSystemDecorsOnSecondaryDisplays">true</bool>
+
+    <!-- Controls if local secondary displays should be private or not. Value specified in the array
+         represents physical port address of each display and display in this list will be marked
+         as private. {@see android.view.Display#FLAG_PRIVATE} -->
+    <integer-array translatable="false" name="config_localPrivateDisplayPorts"></integer-array>
+
+
+
+    <!-- Whether multiple admins are allowed on the device. If set to true, new users can be created
+         with admin privileges and admin privileges can be granted/revoked from existing users. -->
+    <!-- <bool name="config_enableMultipleAdmins">true</bool> -->
+
+    <!-- When true, local displays that do not contain any of their own content will automatically
+         mirror the content of the default display. -->
+    <!-- <bool name="config_localDisplaysMirrorContent">true</bool> -->
+
+
+
+    <!-- Whether switch to headless system user is allowed. If allowed,
+    headless system user can run in the foreground even though it is not a full user. -->
+    <bool name="config_canSwitchToHeadlessSystemUser">true</bool>
+
+    <!-- Whether to boot system with the headless system user, i.e. user 0. If set to true,
+         system will be booted with the headless system user, or user 0. It has no effect if device
+         is not in Headless System User Mode (HSUM). -->
+    <bool name="config_bootToHeadlessSystemUser">true</bool>
+
+
+
+    <!-- An array contains unique ids of all built-in displays and the unique id of a display can be
+         obtained from {@link Display#getUniqueId}. This array should be set for multi-display
+         devices if there are different display related configs(e.g. display cutout, rounded corner)
+         between each built-in display.
+         It is used as an index for multi-display related configs:
+         First look up the index of the unique id of the given built-in display unique id in this
+         array and use this index to get the info in corresponding config arrays such as:
+           - config_displayCutoutPathArray
+           - config_displayCutoutApproximationRectArray
+           - config_fillBuiltInDisplayCutoutArray
+           - config_maskBuiltInDisplayCutoutArray
+           - config_waterfallCutoutArray
+           - config_roundedCornerRadiusArray
+           - config_roundedCornerTopRadiusArray
+           - config_roundedCornerBottomRadiusArray
+           - config_builtInDisplayIsRoundArray (config in SystemUI resource)
+           - config_roundedCornerMultipleRadiusArray (config in SystemUI resource)
+           - config_roundedCornerDrawableArray (config in SystemUI resource)
+           - config_roundedCornerTopDrawableArray (config in SystemUI resource)
+           - config_roundedCornerBottomDrawableArray (config in SystemUI resource)
+
+         Leave this array empty for single display device and the system will load the default main
+         built-in related configs.
+         -->
+    <string-array name="config_displayUniqueIdArray" translatable="false">
+        <item>"local:0"</item>
+        <item>"local:1"</item>
+    </string-array>
+
+    <!-- This is the default launcher package with an activity to use on secondary displays that
+         support system decorations.
+         This launcher package must have an activity that supports multiple instances and has
+         corresponding launch mode set in AndroidManifest.
+         {@see android.view.Display#FLAG_SHOULD_SHOW_SYSTEM_DECORATIONS} -->
+    <string name="config_secondaryHomePackage" translatable="false">com.android.car.carlauncher</string>
+
+    <!-- Force secondary home launcher specified in config_secondaryHomePackage always. If this is
+         not set, secondary home launcher can be replaced by user. -->
+    <!-- <bool name ="config_useSystemProvidedLauncherForSecondary">true</bool> -->
+
+</resources>
