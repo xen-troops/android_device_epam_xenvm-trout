@@ -33,8 +33,6 @@ PRODUCT_VENDOR_PROPERTIES += ro.hardware.vulkan=powervr
 # prior to device/google/trout/aosp_trout_arm64.mk include
 LOCAL_VHAL_PRODUCT_PACKAGE = android.hardware.automotive.vehicle@2.0-virtualization-service
 
-DEVICE_VIRTWIFI_PORT := eth0
-
 PRODUCT_VENDOR_PROPERTIES += \
     ro.carwatchdog.client_healthcheck.interval=20 \
     ro.carwatchdog.vhal_healthcheck.interval=10 \
