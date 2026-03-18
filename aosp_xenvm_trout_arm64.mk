@@ -201,6 +201,7 @@ PRODUCT_PACKAGES += \
     auto_ethernet_setup_script_xenvm \
     auto_ethernet_config_script_xenvm
 
+TARGET_NO_TELEPHONY := true
 
 $(call inherit-product, device/epam/aosp-xenvm-trout/build/graphics.mk)
 $(call inherit-product, device/google/trout/aosp_trout_arm64.mk)
