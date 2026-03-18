@@ -195,6 +195,13 @@ PRODUCT_COPY_FILES += \
 LOCAL_DEVICE_FCM_MANIFEST_FILE = device/epam/aosp-xenvm-trout/manifest.xml
 DEVICE_PRODUCT_COMPATIBILITY_MATRIX_FILE += device/epam/aosp-xenvm-trout/compatibility_matrix.xml
 
+# Enable auto ethernet setup and config scripts for eth1
+# interface used for host-guest communication in xenvm
+PRODUCT_PACKAGES += \
+    auto_ethernet_setup_script_xenvm \
+    auto_ethernet_config_script_xenvm
+
+
 $(call inherit-product, device/epam/aosp-xenvm-trout/build/graphics.mk)
 $(call inherit-product, device/google/cuttlefish/shared/virgl/device_vendor.mk)
 $(call inherit-product, device/google/trout/aosp_trout_arm64.mk)
