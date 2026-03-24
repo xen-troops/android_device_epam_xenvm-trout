@@ -18,7 +18,7 @@
     <item target="array/config_occupant_zones" value="@array/config_occupant_zones" />
     <item target="array/config_occupant_display_mapping" value="@array/config_occupant_display_mapping" />
     <item target="bool/enableProfileUserAssignmentForMultiDisplay" value="@bool/enableProfileUserAssignmentForMultiDisplay" />
-    <!-- <item target="string/config_userNoticeUiService" value="@string/config_userNoticeUiService" /> -->
+    <item target="string/config_userNoticeUiService" value="@string/config_userNoticeUiService" />
     <!-- <item target="string/config_userPickerActivity" value="@string/config_userPickerActivity" /> -->
     <!-- <item target="bool/enablePassengerSupport" value="@bool/enablePassengerSupport" /> -->
     <item target="string/activityAllowlist" value="@string/activityAllowlist" />
