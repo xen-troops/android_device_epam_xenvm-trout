@@ -44,7 +44,7 @@
 /vendor/bin/hw/android.hardware.memtrack-service.img                            u:object_r:hal_memtrack_default_exec:s0
 /vendor/bin/hw/android.hardware.automotive.vehicle@2.0-service.xenvm_trout_arm64            u:object_r:hal_vehicle_default_exec:s0
 /vendor/bin/hw/android.hardware.thermal@1.0-service                             u:object_r:hal_thermal_default_exec:s0
-/vendor/bin/hw/android.hardware.dumpstate@1.0-service                           u:object_r:hal_dumpstate_default_exec:s0
+/vendor/bin/hw/android.hardware.dumpstate-service.img                           u:object_r:hal_dumpstate_default_exec:s0
 /vendor/bin/hw/android.hardware.keymaster@3.0-service.optee                     u:object_r:hal_keymaster_optee_exec:s0
 /vendor/bin/hw/android.hardware.gatekeeper@1.0-service.software                 u:object_r:hal_gatekeeper_optee_exec:s0
 /vendor/bin/hw/android.hardware.sensors@1.0-service.xenvm_trout_arm64                       u:object_r:hal_sensors_default_exec:s0
