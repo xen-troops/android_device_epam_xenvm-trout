@@ -135,8 +135,6 @@ PRODUCT_PACKAGES += \
     img_vintf_android.hardware.graphics.allocator.aidl-service.img-v2.xml \
     img_vintf_android.hardware.memtrack.aidl.img.xml \
     img_vintf_mapper.powervr.xml \
-    img_vintf_android.hardware.dumpstate@1.1-service.img.xml \
-    android.hardware.dumpstate@1.1-service.img.rc \
     android.hardware.graphics.allocator.aidl-service.img.rc \
     android.hardware.memtrack.aidl.img.rc \
     hwperfbin2jsont \
@@ -149,7 +147,6 @@ PRODUCT_PACKAGES += \
     pvrlogsplit \
     pvrsrvctl \
     pvrtld \
-    android.hardware.dumpstate@1.1-service.img \
     android.hardware.graphics.allocator-service \
     android.hardware.memtrack-service.img \
     rgx.fw.35.2.1632.35 \
@@ -165,9 +162,17 @@ PRODUCT_PACKAGES += \
     libEGL_powervr \
     libGLESv1_CM_powervr \
     libGLESv2_powervr \
-    gralloc.xenvm_trout_arm64 \
     mapper.powervr \
-    vulkan.powervr
+    vulkan.powervr \
+    libpvr_mapper_utils \
+    android.hardware.graphics.mapper@4.0-impl \
+    img_vintf_android.hardware.graphics.mapper@4.0-passthrough.img.xml
+
+
+LOCAL_DUMPSTATE_PRODUCT_PACKAGE = android.hardware.dumpstate-service.img \
+	android.hardware.dumpstate.aidl-service.img.rc \
+	img_vintf_android.hardware.dumpstate.aidl-service.img.xml
+
 
 PRODUCT_VENDOR_PROPERTIES += vendor.hwc.backend_override=client
 
@@ -181,7 +186,8 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += ro.surface_flinger.max_frame_buffer_acquir
 # Dumpstate
 PRODUCT_PACKAGES += \
     android.hardware.dumpstate@1.1 \
-    android.hardware.dumpstate@1.1.vendor
+    android.hardware.dumpstate@1.1.vendor \
+    android.hardware.dumpstate-V1-ndk.vendor
 
  # Testing tool for for display
  PRODUCT_PACKAGES += \
