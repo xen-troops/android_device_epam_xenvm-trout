@@ -39,4 +39,5 @@ if [ "$found" -eq 1 ]; then
     log -t dfw "Display card detected, will use vendor.hwc.drm.device = /dev/dri/$card_node"
 fi
 
-/vendor/bin/hw/android.hardware.composer.hwc3-service.drm.xt
+stop vendor.hwcomposer-3
+start vendor.hwcomposer-3

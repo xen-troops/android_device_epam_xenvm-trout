@@ -54,8 +54,7 @@ PRODUCT_PACKAGES += \
     lisot
 
 # Hwcomposer
-PRODUCT_PACKAGES += \
-    android.hardware.composer.hwc3-service.drm.xt \
+PRODUCT_PACKAGES += com.android.hardware.graphics.composer.drm_hwcomposer
 
 # Img deps
 PRODUCT_PACKAGES += \

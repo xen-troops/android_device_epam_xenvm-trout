@@ -8,3 +8,4 @@ log -t dfw "remote proc started ..."
 sleep 2
 modprobe -d /vendor/lib/modules/ disfwk_fe
 log -t dfw "disfwk_fe starting ..."
+/vendor/bin/hw/hwc3.sh
