@@ -19,4 +19,6 @@
 /dev/v4l-subdev3        0666    media           media
 /dev/bus/usb/001/005    0666    bluetooth       bluetooth
 /dev/dma_heap/rvgc_region  0666    system       system
+/dev/dma_heap/reserved  0666    system       system
+/dev/dma_heap/system  0666    system       system
 /dev/dri/card1          0666    system          graphics
