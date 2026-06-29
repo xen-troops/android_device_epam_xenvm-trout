@@ -9,3 +9,5 @@ sleep 2
 modprobe -d /vendor/lib/modules/ disfwk_fe
 log -t dfw "disfwk_fe starting ..."
 /vendor/bin/hw/hwc3.sh
+modprobe -d /vendor/lib/modules/ camfwk_fe
+log -t dfw "camefwk_fe starting ..."

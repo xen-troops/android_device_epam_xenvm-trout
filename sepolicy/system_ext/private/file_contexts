@@ -1,0 +1,2 @@
+/system/bin/evs_app-xt                                                           u:object_r:evs_app_exec:s0
+/system/bin/evsmanagerd-xt                                                       u:object_r:evsmanagerd_exec:s0
