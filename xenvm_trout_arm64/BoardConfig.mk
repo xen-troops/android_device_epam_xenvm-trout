@@ -12,7 +12,7 @@ ifneq ($(TARGET_PREBUILT_MODULES_DIR),)
     KERNEL_MODULES_PATH := $(TARGET_PREBUILT_MODULES_DIR)
     BOARD_VENDOR_RAMDISK_KERNEL_MODULES := $(filter-out $(TARGET_PREBUILT_MODULES_DIR),$(shell find $(TARGET_PREBUILT_MODULES_DIR) -type f -name *.ko))
     # Automatically load everything EXCEPT the following modules
-    BOARD_MODULES_FILTEROUT = %/disfwk_fe.ko %/snd-aloop.ko
+    BOARD_MODULES_FILTEROUT = %/disfwk_fe.ko %/snd-aloop.ko %/camfwk_fe.ko %/vivid.ko
     BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD = $(filter-out $(BOARD_MODULES_FILTEROUT), $(BOARD_VENDOR_RAMDISK_KERNEL_MODULES))
     BOARD_VENDOR_KERNEL_MODULES := $(BOARD_VENDOR_RAMDISK_KERNEL_MODULES)
     BOARD_VENDOR_KERNEL_MODULES_LOAD := $(BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD)
@@ -66,3 +66,12 @@ BOARD_KERNEL_CMDLINE += 8250.nr_uarts=1
 BOARD_VENDOR_SEPOLICY_DIRS += device/google/cuttlefish/shared/virgl/sepolicy
 
 override TARGET_BOARD_PLATFORM := x5h
+
+PRODUCT_COPY_FILES := $(filter-out \
+    device/google/trout/product_files/etc/automotive/evs/config_override.json:%, \
+    $(PRODUCT_COPY_FILES))
+
+PRODUCT_COPY_FILES := $(filter-out \
+    device/google/trout/product_files/vendor/etc/automotive/evs/evs_configuration_override.xml:%, \
+    $(PRODUCT_COPY_FILES))
+

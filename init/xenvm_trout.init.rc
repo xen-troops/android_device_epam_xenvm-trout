@@ -11,3 +11,12 @@ on early-init
 
 on property:sys.boot_completed=1
     stop seriallogging
+
+on property:init.svc.vendor.hwcomposer-3=running
+    wait_for_prop init.svc.vendor.hwcomposer-3 running
+    wait /dev/video3
+    start android.hardware.automotive.evs-default
+    wait_for_prop init.svc.android.hardware.automotive.evs-default running
+    start evsmanagerd
+    start evs_app
+

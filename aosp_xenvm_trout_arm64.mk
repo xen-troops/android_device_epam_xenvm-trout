@@ -241,6 +241,18 @@ PRODUCT_PACKAGES += \
 
 TARGET_NO_TELEPHONY := true
 
+# EVS Camera HAL
+PRODUCT_PACKAGES += \
+    android.hardware.automotive.evs-xt \
+    evs_app-xt \
+    evsmanagerd-xt \
+    TroutEvsOverlay \
+
+ENABLE_EVS_SAMPLE := true
+ENABLE_EVS_SERVICE := true
+ENABLE_REAR_VIEW_CAMERA_SAMPLE := true
+ENABLE_CAREVSSERVICE_SAMPLE := true
+
 $(call inherit-product, device/epam/aosp-xenvm-trout/build/graphics.mk)
 $(call inherit-product, device/google/trout/aosp_trout_arm64.mk)
 $(call inherit-product, device/epam/aosp-xenvm-trout/aosp_xenvm_trout_common.mk)
