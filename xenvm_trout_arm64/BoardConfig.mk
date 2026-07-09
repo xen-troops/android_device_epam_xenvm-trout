@@ -47,7 +47,6 @@ BOARD_BOOTCONFIG += androidboot.openthread_node_id=1
 
 # Reuse trout androidboot properties
 BOARD_BOOTCONFIG += androidboot.hardware=xenvm_trout_arm64
-BOARD_BOOTCONFIG += androidboot.serialno=CUTTLEFISHCVD01
 BOARD_BOOTCONFIG += androidboot.cf_devcfg=1
 
 # Set GPU properties
