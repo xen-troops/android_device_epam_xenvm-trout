@@ -230,7 +230,6 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += fw.visible_bg_users=true
 # (same as Cuttlefish auto_md reference)
 # PRODUCT_SYSTEM_DEFAULT_PROPERTIES += com.android.car.internal.debug.num_auto_populated_users=1
 
-LOCAL_DEVICE_FCM_MANIFEST_FILE = device/epam/aosp-xenvm-trout/manifest.xml
 DEVICE_PRODUCT_COMPATIBILITY_MATRIX_FILE += device/epam/aosp-xenvm-trout/compatibility_matrix.xml
 
 # Enable auto ethernet setup and config scripts for eth1

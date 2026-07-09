@@ -37,7 +37,7 @@ IMG_DEPS_LIBRARIES_TARGETS := $(foreach lib,$(IMG_DEPS_LIBRARIES), \
 #IMG_DEPS_LIBRARIES_TARGETS += $(foreach lib,$(IMG_DEPS_LIBRARIES), \
 #                $(call intermediates_path_for_lib,obj_arm,STATIC_LIBRARIES,$(lib)))
 IMG_DEPS_LIBRARIES_TARGETS += $(foreach lib,$(IMG_JAVA_CLASSES_HEADER_DEPS), \
-                $(call intermediates_path_for_java_lib,obj,JAVA_LIBRARIES,$(lib),classes-header.jar))
+		 $(PRODUCT_OUT)/obj/JAVA_LIBRARIES/$(lib)_intermediates/javalib.jar)
 
 include $(CLEAR_VARS)
 
@@ -50,6 +50,7 @@ LOCAL_MODULE := img-deps
 LOCAL_SRC_FILES := img-deps
 LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_CLASS := ETC
+LOCAL_REQUIRED_MODULES += android_system_stubs_current
 LOCAL_ADDITIONAL_DEPENDENCIES += $(IMG_DEPS_LIBRARIES_TARGETS)
 
 include $(BUILD_PREBUILT)

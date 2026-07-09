@@ -1,4 +1,4 @@
-PRODUCT_SHIPPING_API_LEVEL := 35
+PRODUCT_SHIPPING_API_LEVEL := 37
 
 BOARD_SEPOLICY_DIRS += device/epam/aosp-xenvm-trout/sepolicy
 BOARD_SEPOLICY_DIRS += device/epam/aosp-xenvm-trout/sepolicy/vendor
