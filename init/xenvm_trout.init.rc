@@ -20,3 +20,7 @@ on property:init.svc.vendor.hwcomposer-3=running
     start evsmanagerd
     start evs_app
 
+service tee-supplicant /vendor/bin/tee-supplicant
+    class early_hal
+    user root
+    group root system
