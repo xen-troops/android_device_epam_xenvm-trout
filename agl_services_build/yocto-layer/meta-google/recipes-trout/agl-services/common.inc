@@ -7,7 +7,7 @@ do_fetch[noexec] = "1"
 deltask do_unpack
 deltask do_patch
 
-S = "${TMPDIR}/work-shared/google-trout-agl-services-source/${PV}-${PR}/${FETCH_CODE_PREFIX}"
+S = "${TMPDIR}/work-shared/google-trout-agl-services-source/${PV}-${PR}/sources/${FETCH_CODE_PREFIX}"
 
 do_configure[depends] += "google-trout-agl-services-source:do_patch"
 do_populate_lic[depends] += "google-trout-agl-services-source:do_unpack"

@@ -8,6 +8,10 @@ TARGET_CFLAGS:append = " -Wno-error=array-parameter"
 TARGET_CXXFLAGS:append = " -Wno-error=array-parameter"
 TARGET_CFLAGS:append = " -Wno-error=unused-but-set-variable"
 TARGET_CXXFLAGS:append = " -Wno-error=deprecated-declarations"
+TARGET_CFLAGS:append = " -Wno-error=incompatible-pointer-types-discards-qualifiers"
+TARGET_CXXFLAGS:append = " -Wno-error=incompatible-pointer-types-discards-qualifiers"
+
+EXTRA_OECMAKE += "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
 
 SRCREV_FORMAT = "default"
 
