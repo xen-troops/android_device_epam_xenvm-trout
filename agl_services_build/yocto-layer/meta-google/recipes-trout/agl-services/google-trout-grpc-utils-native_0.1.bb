@@ -9,6 +9,8 @@ TROUT_target_install = "\
     grpc_cpp_plugin:protoc-gen-grpc-cpp-plugin \
 "
 
+EXTRA_OECMAKE += "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
+
 require common.inc
 
 inherit native

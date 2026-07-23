@@ -13,7 +13,7 @@ DEFAULT_REVISION = "s-v2-fs-release"
 
 FETCH_CODE_PREFIX = "src"
 
-S = "${WORKDIR}/${FETCH_CODE_PREFIX}"
+S = "${UNPACKDIR}/${FETCH_CODE_PREFIX}"
 
 # Pull the source from git server remote/name to path
 def trout_git_uri(d, remote, name, path, revision):
