@@ -37,6 +37,12 @@ OPTEE_EXTRA_TA_FLAGS   = $(OPTEE_TOOLCHAIN_FLAGS)
 # Use as is configuration from xen-troops fork (based on the Renesas BSP)
 BUILD_OPTEE_MK := $(OPTEE_OS_DIR)/mk/aosp_optee.mk
 
+# optee_test gates its GP socket tests on CFG_GP_SOCKETS from the dev-kit
+# conf.mk, which is not generated yet when kati parses it on a clean build.
+# Set it here (parsed first, as a product fragment) so the tests are not
+# dropped; conf.mk later re-sets it to the same value.
+CFG_GP_SOCKETS := y
+
 # Enable tee-supplicant optional features to pass several xtest tests:
 # GP sockets (required for regression_2001.2/2002.1/2003.2/2004.2) and
 # plugins (required for regression_1033)
