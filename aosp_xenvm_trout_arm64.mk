@@ -198,6 +198,11 @@ PRODUCT_COPY_FILES += \
     device/epam/aosp-xenvm-trout/bin/dfw.sh:$(TARGET_COPY_OUT_VENDOR)/bin/dfw.sh \
     device/epam/aosp-xenvm-trout/bin/hwc3.sh:$(TARGET_COPY_OUT_VENDOR)/bin/hw/hwc3.sh
 
+# Install PCIe firmware to ramfs, because PCIe requires it on a probe
+PRODUCT_COPY_FILES += \
+    vendor/prebuilts/renesas/firmware/rcar_gen5_pcie6_dccm.bin:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/lib/firmware/rcar_gen5_pcie6_dccm.bin \
+    vendor/prebuilts/renesas/firmware/rcar_gen5_pcie6_iccm.bin:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/lib/firmware/rcar_gen5_pcie6_iccm.bin
+
 # Display settings for multi-display support
 # Must be before the emulator's vendor.mk.
 PRODUCT_COPY_FILES += \
