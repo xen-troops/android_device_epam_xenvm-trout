@@ -24,11 +24,6 @@ UEVENTD_ODM_COPY_FILE = device/epam/aosp-xenvm-trout/init/ueventd.xenvm.rc
 
 LOCAL_OEMLOCK_PRODUCT_PACKAGE := android.hardware.oemlock-service.example
 
-
-PRODUCT_VENDOR_PROPERTIES += ro.hardware.egl=powervr
-PRODUCT_VENDOR_PROPERTIES += ro.hardware.vulkan=powervr
-
-
 # To override VHAL, declare LOCAL_VHAL_PRODUCT_PACKAGE
 # prior to device/google/trout/aosp_trout_arm64.mk include
 LOCAL_VHAL_PRODUCT_PACKAGE = android.hardware.automotive.vehicle@2.0-default-service
@@ -53,132 +48,10 @@ PRODUCT_VENDOR_PROPERTIES += \
 PRODUCT_PACKAGES += \
     lisot
 
-# Hwcomposer
-PRODUCT_PACKAGES += com.android.hardware.graphics.composer.drm_hwcomposer
-
-# Img deps
-PRODUCT_PACKAGES += \
-    libdmabufinfo \
-    libprotobuf-cpp-lite \
-    perfetto_trace_protos \
-    libperfetto_client_experimental \
-    android.hardware.atrace@1.0.vendor \
-    android.hardware.dumpstate@1.0.vendor \
-    android.hardware.thermal@2.0.vendor \
-    android.hardware.thermal@1.0.vendor \
-    libion.vendor \
-    libdmabufheap.vendor \
-    libdumpstateutil.vendor \
-    android.hardware.memtrack-V1-ndk.vendor \
-    libdrm \
-    libarect \
-    perfetto_trace_protos
-
-# Global for IMG DDK
-
-PRODUCT_PACKAGES += \
-    android.hardware.graphics.common@1.0-impl \
-    android.hardware.graphics.mapper@2.0-impl \
-    android.hardware.graphics.mapper@2.0-impl-2.1 \
-    android.hardware.graphics.allocator@2.0-impl \
-    android.hardware.renderscript@1.0-impl \
-    libion \
-    libdrm \
-    libLLVM \
-    img-deps \
-
-
-
-# Graphics allocator/mapper HIDL HALs
-PRODUCT_PACKAGES += \
-    android.hardware.graphics.allocator@2.0-impl \
-    android.hardware.graphics.mapper@2.0-impl-2.1
-
-# Graphics allocator AIDL V1 HAL
-PRODUCT_PACKAGES += \
-    android.hardware.graphics.allocator-V1-ndk.vendor
-
-PRODUCT_PACKAGES += \
-    android.hardware.graphics.allocator@2.0.vndk-sp \
-    android.hardware.graphics.mapper@2.0.vndk-sp \
-    android.hardware.graphics.mapper@2.1.vndk-sp \
-    android.hardware.graphics.common@1.0.vndk-sp \
-    android.hardware.atrace@1.0.vndk-sp \
-    libhwbinder.vndk-sp \
-    libbase.vndk-sp \
-    libcutils.vndk-sp \
-    libhardware.vndk-sp \
-    libhidlbase.vndk-sp \
-    libhidltransport.vndk-sp \
-    libutils.vndk-sp \
-    libc++.vndk-sp \
-    libRS_internal.vndk-sp \
-    libRSDriver.vndk-sp \
-    libRSCpuRef.vndk-sp \
-    libbcinfo.vndk-sp \
-    libblas.vndk-sp \
-    libft2.vndk-sp \
-    libpng.vndk-sp \
-    libcompiler_rt.vndk-sp \
-    libbacktrace.vndk-sp \
-    libunwind.vndk-sp \
-    libunwindstack.vndk-sp \
-    liblzma.vndk-sp \
-    libion.vndk-sp \
-    android.hardware.graphics.composer@2.1 \
-    android.hardware.graphics.allocator-V2-ndk.vendor \
-    libgralloctypes.vendor
-
-
-PRODUCT_PACKAGES += \
-    img_vintf_android.hardware.graphics.allocator.aidl-service.img-v2.xml \
-    img_vintf_android.hardware.memtrack.aidl.img.xml \
-    img_vintf_mapper.powervr.xml \
-    android.hardware.graphics.allocator.aidl-service.img.rc \
-    android.hardware.memtrack.aidl.img.rc \
-    hwperfbin2jsont \
-    pvrdebug \
-    pvrhtb2txt \
-    pvrhtbd \
-    pvrhwperf \
-    pvrhwperfd \
-    pvrlogdump \
-    pvrlogsplit \
-    pvrsrvctl \
-    pvrtld \
-    android.hardware.graphics.allocator-service \
-    android.hardware.memtrack-service.img \
-    rgx.fw.35.2.1632.35 \
-    rgx.sh.35.2.1632.35 \
-    libgpudataproducer \
-    libIMGegl \
-    libpvrANDROID_WSEGL \
-    libPVROCL \
-    libPVRScopeServices \
-    libsrv_um \
-    libufwriter \
-    libusc \
-    libEGL_powervr \
-    libGLESv1_CM_powervr \
-    libGLESv2_powervr \
-    mapper.powervr \
-    vulkan.powervr \
-    libpvr_mapper_utils \
-    android.hardware.graphics.mapper@4.0-impl \
-    img_vintf_android.hardware.graphics.mapper@4.0-passthrough.img.xml
-
-
 LOCAL_DUMPSTATE_PRODUCT_PACKAGE = android.hardware.dumpstate-service.img \
 	android.hardware.dumpstate.aidl-service.img.rc \
 	img_vintf_android.hardware.dumpstate.aidl-service.img.xml
 
-
-PRODUCT_VENDOR_PROPERTIES += vendor.hwc.backend_override=client
-
-# Graphics composer HIDL HAL (service added below)
-PRODUCT_PACKAGES += \
-    android.hardware.graphics.composer@2.1.vendor \
-    android.hardware.graphics.composer@2.1-impl
 
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += ro.surface_flinger.max_frame_buffer_acquired_buffers=3
 
@@ -191,12 +64,6 @@ PRODUCT_PACKAGES += \
  # Testing tool for for display
  PRODUCT_PACKAGES += \
     modetest \
-
-# Display driver
-PRODUCT_COPY_FILES += \
-    vendor/prebuilts/renesas/firmware/disfwk.elf:$(TARGET_COPY_OUT_VENDOR)/firmware/disfwk.elf \
-    device/epam/aosp-xenvm-trout/bin/dfw.sh:$(TARGET_COPY_OUT_VENDOR)/bin/dfw.sh \
-    device/epam/aosp-xenvm-trout/bin/hwc3.sh:$(TARGET_COPY_OUT_VENDOR)/bin/hw/hwc3.sh
 
 # Install PCIe firmware to ramfs, because PCIe requires it on a probe
 PRODUCT_COPY_FILES += \

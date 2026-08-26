@@ -28,12 +28,4 @@ PRODUCT_PACKAGE_OVERLAYS += device/epam/aosp-xenvm-trout/overlay
 
 PRODUCT_VENDOR_PROPERTIES += vendor.ser.gnss-uart=/dev/vport6p2
 
-# Upstream mesa3d graphics dependancies
-PRODUCT_PACKAGES += \
-        libEGL_mesa \
-        libGLESv1_CM_mesa \
-        libGLESv2_mesa \
-        libgallium_dri \
-        libglapi
-
 PRODUCT_PACKAGES += xenvm_overlay_connectivity
