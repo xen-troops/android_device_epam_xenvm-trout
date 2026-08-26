@@ -39,18 +39,12 @@ BOARD_BOOTCONFIG += androidboot.android_dt_dir=/proc/device-tree/firmware#1/andr
 BOARD_BOOTCONFIG += kernel.vmw_vsock_virtio_transport_common.virtio_transport_max_vsock_pkt_buf_size=16384
 BOARD_BOOTCONFIG += androidboot.load_modules_parallel=true
 BOARD_BOOTCONFIG += androidboot.lcd_density=160
-BOARD_BOOTCONFIG += androidboot.hardware.hwcomposer=xenvm_trout_arm64
-BOARD_BOOTCONFIG += androidboot.hardware.hwcomposer.mode=client
-BOARD_BOOTCONFIG += androidboot.hardware.hwcomposer.display_finder_mode=drm
 BOARD_BOOTCONFIG += androidboot.boot_devices=33000000.pcie
 BOARD_BOOTCONFIG += androidboot.openthread_node_id=1
 
 # Reuse trout androidboot properties
 BOARD_BOOTCONFIG += androidboot.hardware=xenvm_trout_arm64
 BOARD_BOOTCONFIG += androidboot.cf_devcfg=1
-
-# Set GPU properties
-BOARD_BOOTCONFIG += androidboot.cpuvulkan.version=0
 
 # Add WiFi configuration for VirtWifi network
 BOARD_BOOTCONFIG += androidboot.wifi_mac_prefix=5554
