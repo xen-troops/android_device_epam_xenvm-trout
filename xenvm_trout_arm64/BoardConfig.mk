@@ -68,3 +68,5 @@ PRODUCT_COPY_FILES := $(filter-out \
     device/google/trout/product_files/vendor/etc/automotive/evs/evs_configuration_override.xml:%, \
     $(PRODUCT_COPY_FILES))
 
+BOARD_SHIPPING_API_LEVEL := 37
+
