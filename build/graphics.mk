@@ -145,3 +145,6 @@ PRODUCT_PACKAGES += \
 
 # Do not use vulkan from CF
 override TARGET_VULKAN_SUPPORT := false
+
+# Using vulkan backend for hwui.
+TARGET_USES_VULKAN := true
