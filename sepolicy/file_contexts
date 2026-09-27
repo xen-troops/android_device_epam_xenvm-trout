@@ -1,3 +1,4 @@
 # Virtualized Vehicle HAL (Client)
 /(vendor|system/vendor)/bin/hw/android\.hardware\.automotive\.vehicle@2\.0-virtualization-service-extended  u:object_r:hal_vehicle_default_exec:s0
 /sys/devices/platform/33000000.pcie/pci0000\:00/uevent u:object_r:sysfs_gpu_trout:s0
+/vendor/bin/hw/android.hardware.camera.provider-V1-xt-service u:object_r:hal_camera_default_exec:s0
