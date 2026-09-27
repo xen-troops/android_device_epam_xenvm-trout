@@ -2,6 +2,9 @@ allow kernel device:chr_file { create setattr getattr unlink };
 allow kernel device:dir { create write add_name remove_name rmdir };
 allow kernel self:capability { fowner mknod };
 
+allow kernel vendor_file:file { read open };
+allow kernel vendor_file:system firmware_load;
+
 userdebug_or_eng(`
     dontaudit kernel device:blk_file { create unlink setattr getattr };
 ')

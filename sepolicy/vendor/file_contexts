@@ -117,3 +117,5 @@
 /vendor/bin/bcc                      u:object_r:same_process_hal_file:s0
 /vendor/bin/rscompiler               u:object_r:same_process_hal_file:s0
 
+/dev/dma_heap/rvgc_region    u:object_r:rvgc_heap_device:s0
+

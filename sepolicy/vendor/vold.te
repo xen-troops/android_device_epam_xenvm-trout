@@ -7,3 +7,6 @@ allow vold block_device:file {create open read write unlink getattr};
 userdebug_or_eng(`
   dontaudit vold self:capability dac_read_search;
 ')
+
+allow vold swap_block_device:blk_file { getattr read open ioctl };
+
