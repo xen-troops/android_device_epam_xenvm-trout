@@ -112,6 +112,29 @@ PRODUCT_PACKAGES += \
 
 TARGET_NO_TELEPHONY := true
 
+# Camera HAL selection: c2 (default) or evs
+CAMERA_HAL_TYPE ?= c2
+
+ifeq ($(CAMERA_HAL_TYPE),c2)
+
+# Camera2 HAL
+PRODUCT_PROPERTY_OVERRIDES += config.disable_cameraservice=false
+PRODUCT_PROPERTY_OVERRIDES += camera2.portability.force_api=2
+
+PRODUCT_PACKAGES += android.hardware.camera.provider-V1-xt-service
+
+PRODUCT_COPY_FILES += \
+    frameworks/native/data/etc/android.hardware.camera.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.xml \
+
+ENABLE_EVS_SAMPLE := falase
+ENABLE_EVS_SERVICE := false
+ENABLE_REAR_VIEW_CAMERA_SAMPLE := true
+ENABLE_CAREVSSERVICE_SAMPLE := true
+ENABLE_CAMERA_SERVICE := true
+
+
+else ifeq ($(CAMERA_HAL_TYPE),evs)
+
 # EVS Camera HAL
 PRODUCT_PACKAGES += \
     android.hardware.automotive.evs-xt \
@@ -123,6 +146,10 @@ ENABLE_EVS_SAMPLE := true
 ENABLE_EVS_SERVICE := true
 ENABLE_REAR_VIEW_CAMERA_SAMPLE := true
 ENABLE_CAREVSSERVICE_SAMPLE := true
+
+else
+$(error Unsupported CAMERA_HAL_TYPE '$(CAMERA_HAL_TYPE)', expected 'c2' or 'evs')
+endif
 
 $(call inherit-product, device/epam/aosp-xenvm-trout/build/graphics.mk)
 $(call inherit-product, device/google/trout/aosp_trout_arm64.mk)
