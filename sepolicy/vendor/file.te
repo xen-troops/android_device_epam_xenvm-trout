@@ -11,4 +11,5 @@ type sysfs_mmc_stat, fs_type, sysfs_type;
 type rvgc_heap_device, dmabuf_heap_device_type, dev_type;
 type proc_pvr, fs_type, proc_type;
 type sysfs_backlight, sysfs_type, fs_type;
+type sysfs_remoteproc, sysfs_type, fs_type;
 

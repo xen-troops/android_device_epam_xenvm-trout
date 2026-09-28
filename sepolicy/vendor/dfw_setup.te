@@ -1,0 +1,46 @@
+type dfw_setup, domain;
+type dfw_setup_exec, vendor_file_type, exec_type, file_type;
+vendor_internal_prop(vendor_hwc_drm_prop)
+init_daemon_domain(dfw_setup)
+
+# /vendor/bin/sh, toybox (modprobe, sleep)
+allow dfw_setup vendor_shell_exec:file rx_file_perms;
+allow dfw_setup vendor_toolbox_exec:file rx_file_perms;
+allow dfw_setup vendor_file:dir r_dir_perms;          # cd /vendor/firmware
+
+# remoteproc0/{firmware,state}
+allow dfw_setup sysfs:dir search;
+allow dfw_setup sysfs:lnk_file read;                  # /sys/class/remoteproc/* symlinks
+allow dfw_setup sysfs_remoteproc:dir r_dir_perms;
+allow dfw_setup sysfs_remoteproc:file rw_file_perms;
+
+# modprobe disfwk_fe / camfwk_fe
+allow dfw_setup self:capability sys_module;
+r_dir_file(dfw_setup, vendor_kernel_modules)
+allow dfw_setup vendor_kernel_modules:system module_load;
+allow dfw_setup proc_modules:file r_file_perms;
+
+# logging
+allow dfw_setup kmsg_device:chr_file w_file_perms;
+
+allow dfw_setup sysfs:dir r_dir_perms;
+allow dfw_setup sysfs:lnk_file read;
+allow dfw_setup sysfs:file getattr;
+
+set_prop(dfw_setup, ctl_start_prop)
+set_prop(dfw_setup, ctl_stop_prop)
+
+# setprop vendor.hwc.drm.device (hwc3.sh)
+set_prop(dfw_setup, vendor_hwc_drm_prop)
+
+# modprobe reads module params from /proc/cmdline
+allow dfw_setup proc_cmdline:file r_file_perms;
+
+# modules actually live in /vendor_dlkm (labeled vendor_file)
+allow dfw_setup vendor_file:system module_load;
+
+# hwc3.sh is labeled hal_graphics_composer_default_exec
+allow dfw_setup hal_graphics_composer_default_exec:file { rx_file_perms execute_no_trans };
+
+# default value of vendor.hwc.drm.device comes from /vendor/build.prop
+set_prop(vendor_init, vendor_hwc_drm_prop)

@@ -3,3 +3,6 @@ genfscon sysfs /devices/platform/da000000.pcie/pci0001:00/0001:00:00.0/0001:01:0
 genfscon sysfs /devices/platform/passthrough/cb000000.gsx u:object_r:sysfs_gpu:s0
 genfscon sysfs /class/backlight u:object_r:sysfs_backlight:s0
 genfscon sysfs /devices/platform/passthrough/uevent u:object_r:sysfs_gpu:s0
+genfscon sysfs /devices/platform/passthrough/passthrough:cr52_2/remoteproc u:object_r:sysfs_remoteproc:s0
+genfscon sysfs /devices/platform/uevent u:object_r:sysfs_gpu:s0
+
