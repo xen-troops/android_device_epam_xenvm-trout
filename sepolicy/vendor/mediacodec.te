@@ -1,6 +1,13 @@
 allow mediacodec tty_device:chr_file { read write };
 allow mediacodec debugfs_tracing:file { open read write };
 
+# Allow V4L2 Codec2 HAL to open and use /dev/video* nodes (taurus-media)
+allow mediacodec video_device:chr_file { open read write ioctl getattr };
+allow mediacodec video_device:dir { search open read getattr };
+
+# Allow mediacodec service to look up and interact with the custom DMA heap node
+allow mediacodec dmabuf_heap_device:chr_file { read open getattr ioctl };
+
 userdebug_or_eng(`
     dontaudit mediacodec system_file:file { getattr open read };
 ')

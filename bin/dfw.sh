@@ -11,3 +11,5 @@ log -t dfw "disfwk_fe starting ..."
 /vendor/bin/hw/hwc3.sh
 modprobe -d /vendor/lib/modules/ camfwk_fe
 log -t dfw "camefwk_fe starting ..."
+modprobe -d /vendor/lib/modules/ virtio-media
+log -t dfw "virtio-media starting ..."

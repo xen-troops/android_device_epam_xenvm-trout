@@ -13,6 +13,10 @@ PRODUCT_SYSTEM_EXT_PROPERTIES += \
 PRODUCT_COPY_FILES += \
     device/epam/aosp-xenvm-trout/conf/Vendor_0627_Product_0003.idc:$(TARGET_COPY_OUT_VENDOR)/usr/idc/Vendor_0627_Product_0003.idc
 
+# Install media_codecs_c2.xml
+PRODUCT_COPY_FILES += \
+    device/epam/aosp-xenvm-trout/conf/media_codecs_c2.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_c2.xml
+
 # Disable UWB HAL
 PRODUCT_COPY_FILES += \
     device/generic/car/common/android.hardware.disable.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.uwb.xml \
@@ -128,6 +132,10 @@ $(call inherit-product, device/epam/aosp-xenvm-trout/build/graphics.mk)
 $(call inherit-product, device/google/trout/aosp_trout_arm64.mk)
 $(call inherit-product, device/epam/aosp-xenvm-trout/aosp_xenvm_trout_common.mk)
 $(call inherit-product, device/epam/aosp-xenvm-trout/optee/optee.mk)
+
+# Override inherited defaults by removing any previous Codec2 HAL selection,
+# then setting a single device-specific value.
+PRODUCT_PROPERTY_OVERRIDES += media.c2.hal.selection=hidl
 
 LOCAL_BT_PROPERTIES = \
  vendor.ser.bt-uart=/dev/hvc5 \
