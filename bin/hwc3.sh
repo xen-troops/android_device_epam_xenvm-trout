@@ -1,4 +1,4 @@
-#!/system/bin/sh
+#!/vendor/bin/sh
 # Wrapper, in case the hwc is requested before the display connector is created.
 
 TRIES=20
@@ -6,7 +6,7 @@ SLEEP_SEC=1
 
 found=0
 card_id=1
-
+i=1
 
 while [ "$i" -le "$TRIES" ]; do
     for st in /sys/class/drm/card*-*/status; do

@@ -1,4 +1,4 @@
-#!/system/bin/sh
+#!/vendor/bin/sh
 # Remote proc part, need to start communication with real-time cluster
 cd /vendor/firmware/
 echo ./disfwk.elf > /sys/class/remoteproc/remoteproc0/firmware

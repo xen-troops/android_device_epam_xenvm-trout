@@ -1,9 +1,8 @@
-service dispfw_fe /system/bin/sh /vendor/bin/dfw.sh
+service dispfw_fe /vendor/bin/dfw.sh
     user root
     group root
     oneshot
     disabled
-    seclabel u:r:su:s0
 
 on early-init
     start dispfw_fe

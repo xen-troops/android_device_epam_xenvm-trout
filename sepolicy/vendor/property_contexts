@@ -3,4 +3,5 @@
 #ro.opengles.                u:object_r:opengles_prop:s0
 persist.vendor.vis.uri         u:object_r:vendor_vis_prop:s0
 #vendor.product.pvr.debug_level  u:object_r:graphics_config_prop:s0
+vendor.hwc.drm.device    u:object_r:vendor_hwc_drm_prop:s0 exact string
 
