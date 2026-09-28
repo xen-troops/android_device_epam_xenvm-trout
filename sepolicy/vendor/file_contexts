@@ -119,3 +119,5 @@
 
 /dev/dma_heap/rvgc_region    u:object_r:rvgc_heap_device:s0
 /vendor/bin/dfw.sh    u:object_r:dfw_setup_exec:s0
+# Codec
+/dev/dma_heap/rvicodec_region        u:object_r:dmabuf_system_heap_device:s0
