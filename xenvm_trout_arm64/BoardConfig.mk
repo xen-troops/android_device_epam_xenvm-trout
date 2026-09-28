@@ -12,7 +12,7 @@ ifneq ($(TARGET_PREBUILT_MODULES_DIR),)
     KERNEL_MODULES_PATH := $(TARGET_PREBUILT_MODULES_DIR)
     BOARD_VENDOR_RAMDISK_KERNEL_MODULES := $(filter-out $(TARGET_PREBUILT_MODULES_DIR),$(shell find $(TARGET_PREBUILT_MODULES_DIR) -type f -name *.ko))
     # Automatically load everything EXCEPT the following modules
-    BOARD_MODULES_FILTEROUT = %/disfwk_fe.ko %/snd-aloop.ko %/camfwk_fe.ko %/vivid.ko
+    BOARD_MODULES_FILTEROUT = %/disfwk_fe.ko %/snd-aloop.ko %/camfwk_fe.ko %/vivid.ko %/virtio-media.ko
     BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD = $(filter-out $(BOARD_MODULES_FILTEROUT), $(BOARD_VENDOR_RAMDISK_KERNEL_MODULES))
     BOARD_VENDOR_KERNEL_MODULES := $(BOARD_VENDOR_RAMDISK_KERNEL_MODULES)
     BOARD_VENDOR_KERNEL_MODULES_LOAD := $(BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD)
