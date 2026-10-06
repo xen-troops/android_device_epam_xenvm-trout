@@ -6,3 +6,5 @@ genfscon sysfs /devices/platform/passthrough/uevent u:object_r:sysfs_gpu:s0
 genfscon sysfs /devices/platform/passthrough/passthrough:cr52_2/remoteproc u:object_r:sysfs_remoteproc:s0
 genfscon sysfs /devices/platform/uevent u:object_r:sysfs_gpu:s0
 
+# virtio system disk: init writes queue/discard_max_bytes
+genfscon sysfs /devices/platform/33000000.pcie/pci0000:00/0000:00:01.0/virtio0/block/vda/queue/discard_max_bytes u:object_r:sysfs_block_discard:s0

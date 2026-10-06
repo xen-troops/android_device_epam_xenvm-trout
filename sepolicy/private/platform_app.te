@@ -1,0 +1,2 @@
+dontaudit platform_app system_data_file:dir search;
+
