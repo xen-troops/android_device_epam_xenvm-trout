@@ -1,0 +1,1 @@
+allow init sysfs_block_discard:file w_file_perms;
