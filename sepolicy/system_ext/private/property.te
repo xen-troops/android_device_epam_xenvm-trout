@@ -1,0 +1,2 @@
+# ethernet-xt.rc: sys_ns -> auto_eth setup handshake
+system_internal_prop(xenvm_sys_ns_prop)

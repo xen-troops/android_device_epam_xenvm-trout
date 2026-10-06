@@ -1,0 +1,22 @@
+# ethernet_sys_ns.sh: `setprop vendor.sys_ns.ready 1`
+set_prop(auto_ethernet_setup, xenvm_sys_ns_prop)
+
+# `ip link show`, `ip addr add`, `ip route add`, `ip rule add`
+# (cuttlefish ethernet.te allows only RTM_NEWLINK/RTM_GETNSID/RTM_NEWNSID)
+allowxperm auto_ethernet_setup self:netlink_route_socket nlmsg {
+    RTM_GETLINK
+    RTM_NEWADDR
+    RTM_NEWROUTE
+    RTM_NEWRULE
+};
+
+# `ip ... table 100` / `lookup 100`: iproute2 reads /data/misc/net/rt_tables
+r_dir_file(auto_ethernet_setup, net_data_file)
+
+# `sysctl -w net.ipv4.ip_forward=1`
+allow auto_ethernet_setup proc_net:file w_file_perms;
+
+# `iptables` (legacy): raw socket + IPT_SO_* get/setsockopt, xtables lock
+allow auto_ethernet_setup self:capability net_raw;
+allow auto_ethernet_setup self:rawip_socket { create getopt setopt };
+allow auto_ethernet_setup system_file:file lock;

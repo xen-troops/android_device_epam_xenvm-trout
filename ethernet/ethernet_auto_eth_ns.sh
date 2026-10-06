@@ -38,6 +38,15 @@
 #
 # =============================================================================
 
+# --- Configure eth1 (moved into this namespace by the system namespace script) ---
+
+# Assign a static IP address to eth1.
+# This address is used for communication on the automotive/vehicle network.
+ip addr add 192.168.2.4/24 dev eth1
+
+# Bring eth1 up
+ip link set eth1 up
+
 # --- Wait for veth_auto interface ---
 # The system namespace script creates the veth pair and moves veth_auto
 # into this namespace. Since both scripts may start concurrently, we poll

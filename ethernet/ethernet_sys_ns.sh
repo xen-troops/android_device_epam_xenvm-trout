@@ -46,12 +46,9 @@ ip netns add auto_eth
 # in the default namespace.
 ip link set eth1 netns auto_eth
 
-# Assign a static IP address to eth1 inside the automotive namespace.
-# This address is used for communication on the automotive/vehicle network.
-ip netns exec auto_eth ip addr add 192.168.2.4/24 dev eth1
-
-# Bring eth1 up inside the automotive namespace
-ip netns exec auto_eth ifconfig eth1 up
+# eth1 IP address and link state are configured by ethernet_auto_eth_ns.sh,
+# which init starts inside the auto_eth namespace (enter_namespace).
+# `ip netns exec` is not usable here: it remounts /sys, which SELinux forbids.
 
 # --- veth pair: connectivity bridge between namespaces ---
 # A virtual Ethernet (veth) pair acts as a point-to-point tunnel between
