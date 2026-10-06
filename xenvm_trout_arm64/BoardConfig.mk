@@ -34,7 +34,6 @@ BOARD_BOOTCONFIG += androidboot.vendor.vehiclehal.server.cid=2
 BOARD_BOOTCONFIG += androidboot.vendor.vehiclehal.server.port=9210
 BOARD_BOOTCONFIG += androidboot.vendor.vehiclehal.server.psf=/data/data/power.file
 BOARD_BOOTCONFIG += androidboot.vendor.vehiclehal.server.pss=/data/data/power.socket
-BOARD_BOOTCONFIG += androidboot.selinux=permissive
 BOARD_BOOTCONFIG += androidboot.android_dt_dir=/proc/device-tree/firmware#1/android/
 BOARD_BOOTCONFIG += kernel.vmw_vsock_virtio_transport_common.virtio_transport_max_vsock_pkt_buf_size=16384
 BOARD_BOOTCONFIG += androidboot.load_modules_parallel=true
