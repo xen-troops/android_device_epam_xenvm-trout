@@ -21,4 +21,5 @@ PRODUCT_MAKEFILES := \
 COMMON_LUNCH_CHOICES := \
 	aosp_xenvm_trout_arm64-trunk_staging-eng \
 	aosp_xenvm_trout_arm64-trunk_staging-userdebug \
+	aosp_xenvm_trout_arm64-trunk_staging-user \
 	aosp_xenvm_trout_x86-trunk_staging-eng \
