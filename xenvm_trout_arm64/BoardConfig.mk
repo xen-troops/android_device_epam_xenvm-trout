@@ -32,7 +32,6 @@ SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += device/epam/aosp-xenvm-trout/sepolicy/privat
 BOARD_BOOTCONFIG := androidboot.fstab_name=fstab
 BOARD_BOOTCONFIG += androidboot.fstab_suffix=trout_xenvm
 BOARD_BOOTCONFIG += androidboot.vendor.apex.com.android.hardware.keymint=com.android.hardware.keymint.rust_nonsecure
-BOARD_BOOTCONFIG += androidboot.vendor.apex.com.android.hardware.gatekeeper=com.android.hardware.gatekeeper.nonsecure
 BOARD_BOOTCONFIG += androidboot.vendor.vehiclehal.server.cid=2
 BOARD_BOOTCONFIG += androidboot.vendor.vehiclehal.server.port=9210
 BOARD_BOOTCONFIG += androidboot.vendor.vehiclehal.server.psf=/data/data/power.file

@@ -3,6 +3,8 @@ include $(CLEAR_VARS)
 
 PHONY_OVERRIDE_PACKAGES := \
    com.android.hardware.uwb \
+   com.android.hardware.gatekeeper.cf_remote \
+   com.android.hardware.gatekeeper.nonsecure \
 
 LOCAL_MODULE := phony_override_packages
 LOCAL_MODULE_TAGS := optional
