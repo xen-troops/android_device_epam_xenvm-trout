@@ -48,9 +48,10 @@ TARGET_RECOVERY_FSTAB := device/epam/aosp-xenvm-trout/shared/config/fstab.trout_
 PRODUCT_VENDOR_PROPERTIES += \
 	persist.vendor.otsim.local_interface=eth1
 
-# Testing tool for vhost-vsock
+# Testing tools
 PRODUCT_PACKAGES += \
-    lisot
+    lisot \
+    scmitest
 
 LOCAL_DUMPSTATE_PRODUCT_PACKAGE = android.hardware.dumpstate-service.img \
 	android.hardware.dumpstate.aidl-service.img.rc \
