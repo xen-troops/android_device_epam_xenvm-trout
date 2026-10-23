@@ -5,3 +5,6 @@ allow shell ab_update_gki_prop:file { getattr open };
 allow shell build_attestation_prop:file { getattr map };
 
 allow shell dmabuf_system_heap_device:chr_file r_file_perms;
+
+allow shell scmitest_exec:file rx_file_perms;
+r_dir_file(shell, sysfs_iio_devices);
