@@ -163,7 +163,7 @@ $(call inherit-product, device/epam/aosp-xenvm-trout/optee/optee.mk)
 
 # Override inherited defaults by removing any previous Codec2 HAL selection,
 # then setting a single device-specific value.
-PRODUCT_PROPERTY_OVERRIDES += media.c2.hal.selection=hidl
+PRODUCT_PROPERTY_OVERRIDES += media.c2.hal.selection=aidl
 
 LOCAL_BT_PROPERTIES = \
  vendor.ser.bt-uart=/dev/hvc5 \
