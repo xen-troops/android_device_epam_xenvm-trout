@@ -7,6 +7,9 @@ endif
 
 include device/google/trout/trout_arm64/BoardConfig.mk
 
+# Keep this after trout include
+TARGET_RECOVERY_UI_LIB := librecovery_ui_vm
+
 ifneq ($(TARGET_PREBUILT_MODULES_DIR),)
     # Set KERNEL_MODULES_PATH to the directory with modules
     KERNEL_MODULES_PATH := $(TARGET_PREBUILT_MODULES_DIR)
