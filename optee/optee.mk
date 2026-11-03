@@ -43,6 +43,10 @@ BUILD_OPTEE_MK := $(OPTEE_OS_DIR)/mk/aosp_optee.mk
 $(call soong_config_set,optee_client,cfg_gp_sockets,true)
 $(call soong_config_set,optee_client,cfg_tee_supp_plugins,true)
 
+# Keep the REE FS secure storage off /data: the TAs of early_hal services
+# (KeyMint) open it before /data is mounted
+$(call soong_config_set,optee_client,cfg_tee_fs_parent_path,/mnt/vendor/persist/tee)
+
 PRODUCT_PACKAGES += \
         tee-supplicant \
         libteec
