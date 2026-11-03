@@ -1,8 +1,6 @@
 service dhcpclient_eth1 /system/bin/dhcpclient -i eth1
     class default
-    console
     user root
     group root shell log readproc
-    seclabel u:r:su:s0
-    setenv HOSTNAME console
+    seclabel u:r:dhcpclient:s0
 

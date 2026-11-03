@@ -1,0 +1,19 @@
+type dhcpclient, domain;
+type dhcpclient_exec, exec_type, vendor_file_type, file_type;
+init_daemon_domain(dhcpclient)
+net_domain(dhcpclient)
+recovery_only(`
+  domain_trans(init, rootfs, dhcpclient)
+')
+allow dhcpclient self:capability { net_admin net_raw };
+allow dhcpclient self:packet_socket create_socket_perms_no_ioctl;
+allow dhcpclient self:netlink_route_socket { create_socket_perms_no_ioctl nlmsg_write };
+allow dhcpclient self:udp_socket { create ioctl };
+allowxperm dhcpclient self:udp_socket ioctl {
+    SIOCGIFINDEX SIOCGIFFLAGS SIOCSIFFLAGS SIOCGIFHWADDR
+    SIOCSIFADDR SIOCSIFNETMASK SIOCSIFMTU
+};
+allow dhcpclient self:netlink_route_socket ioctl;
+allowxperm dhcpclient self:netlink_route_socket ioctl { SIOCGIFINDEX SIOCGIFFLAGS SIOCSIFFLAGS SIOCGIFHWADDR };
+allow dhcpclient self:netlink_route_socket nlmsg;
+allowxperm dhcpclient self:netlink_route_socket nlmsg { RTM_NEWADDR RTM_DELADDR RTM_NEWROUTE RTM_DELROUTE RTM_NEWLINK RTM_GETLINK };
