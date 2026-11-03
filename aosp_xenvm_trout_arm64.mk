@@ -6,7 +6,7 @@ ifneq ($(TARGET_PREBUILT_KERNEL),)
    TARGET_KERNEL_USE := 6.1
 endif
 
-PRODUCT_SYSTEM_EXT_PROPERTIES += \
+PRODUCT_VENDOR_PROPERTIES += \
    dalvik.vm.usejit=false \
 
 # Configure single touch device
@@ -22,7 +22,7 @@ PRODUCT_COPY_FILES += \
     device/generic/car/common/android.hardware.disable.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.uwb.xml \
 
 PRODUCT_COPY_FILES += \
-    device/epam/aosp-xenvm-trout/init/xenvm_trout.init.rc:$(TARGET_COPY_OUT_PRODUCT)/etc/init/xenvm_trout.init.rc \
+    device/epam/aosp-xenvm-trout/init/xenvm_trout.init.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/xenvm_trout.init.rc \
 
 UEVENTD_ODM_COPY_FILE = device/epam/aosp-xenvm-trout/init/ueventd.xenvm.rc
 
