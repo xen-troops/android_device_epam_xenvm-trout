@@ -23,7 +23,7 @@
 
     <!-- Display settings for 2nd Home -->
     <display name="local:1"
-        shouldShowSystemDecors="true"
+        shouldShowSystemDecors="false"
         shouldShowIme="true"
         shouldShowWithInsecureKeyguard="true"
         forcedDensity="160" />
