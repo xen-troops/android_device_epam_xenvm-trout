@@ -103,6 +103,9 @@ PRODUCT_PACKAGES += com.android.car.carlauncher
 # (before Resources.getSystem() overlay application).
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += fw.visible_bg_users=true
 
+PRODUCT_PACKAGES += \
+    SettingsProviderOverlayXenVm
+
 # Auto-populate 1 passenger user so display 1 shows UserPicker at boot
 # (same as Cuttlefish auto_md reference)
 # PRODUCT_SYSTEM_DEFAULT_PROPERTIES += com.android.car.internal.debug.num_auto_populated_users=1

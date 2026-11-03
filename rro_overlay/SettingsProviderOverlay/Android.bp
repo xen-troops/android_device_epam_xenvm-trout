@@ -1,0 +1,5 @@
+runtime_resource_overlay {
+    name: "SettingsProviderOverlayXenVm",
+    vendor: true,
+    sdk_version: "current",
+}
