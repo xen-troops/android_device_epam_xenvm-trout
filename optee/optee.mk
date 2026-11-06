@@ -102,6 +102,9 @@ PRODUCT_PACKAGES += android.hardware.security.keymint-service.optee.rust
 # KeyMint TA (Rust) used by the HAL above
 PRODUCT_PACKAGES += dba51a17-0563-11e7-93b1-6fa7b0071a51.ta
 
+# Provisions the KeyMint attestation IDs, once per device
+PRODUCT_PACKAGES += keymint-optee-provision-ids
+
 # VTS KeyMint, SecureClock, SharedSecret and RemotelyProvisionedComponent
 # test binaries (for on-device debugging)
 PRODUCT_PACKAGES_DEBUG += \
