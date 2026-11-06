@@ -1,0 +1,10 @@
+type hal_keymint_optee, domain;
+hal_server_domain(hal_keymint_optee, hal_keymint)
+
+type hal_keymint_optee_exec, exec_type, vendor_file_type, file_type;
+init_daemon_domain(hal_keymint_optee)
+
+allow hal_keymint_optee tee_device:chr_file rw_file_perms;
+
+# Vendor patch level sent to the TA (ro.vendor.build.security_patch)
+get_prop(hal_keymint_optee, vendor_security_patch_level_prop)
