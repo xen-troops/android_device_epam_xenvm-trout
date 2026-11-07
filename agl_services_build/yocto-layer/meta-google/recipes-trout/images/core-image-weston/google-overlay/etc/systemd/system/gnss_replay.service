@@ -4,7 +4,9 @@ After=multi-user.target
 
 [Service]
 ExecStartPre=/bin/sh -c 'while [ ! -e /run/gnss-uart ]; do sleep 0.2; done'
-ExecStart=/usr/bin/python3 /usr/bin/gnss_replay.py -s /run/gnss-uart -i /usr/share/gnss/test.csv
+# Keep reported values inside GNSS VTS/CTS conformance bounds without
+# rewriting the source capture: speed below 5 m/s and positive accuracy.
+ExecStart=/usr/bin/python3 /usr/bin/gnss_replay.py -s /run/gnss-uart -i /usr/share/gnss/test.csv --max-speed-mps 4.5 --minimum-bearing-accuracy-degrees 1
 Restart=always
 RestartSec=1
 

@@ -20,12 +20,16 @@ bitbake-layers add-layer meta-clang meta-google
 
 ### GNSS replay unit tests
 
-Run the host-side replay tests from the repository root:
+Run the replay tests from the root of the `android_device_epam_xenvm-trout`
+repository. They load the recipe's Python source and replay fixture
+directly, so a configured Yocto build directory is not required.
 
-```
+```sh
 PYTHONDONTWRITEBYTECODE=1 python3 -m unittest -v \
     agl_services_build/tests/test_gnss_replay.py
 ```
 
 The tests exercise fragmented and coalesced newline-delimited requests,
 complete response framing, unknown commands, and connection shutdown.
+These tests cover monotonic Fix replay, runtime clock refresh, speed and
+accuracy limits, and Raw replay behavior.

@@ -22,33 +22,256 @@
 # GnssLogger or equivalent tooling
 
 import argparse
+import bisect
+import math
 import sys
 import socket
 import time
 
-class DataStore(object):
-    def __init__(self, prefix, lines):
-        self.idx = 0
-        self.lines = []
+class RawMeasurementReplay(object):
+    """Replay complete satellite-measurement epochs on the Fix timeline."""
+
+    GPS_WEEK_NANOS = 604800 * 1000000000
+    GLONASS_DAY_NANOS = 86400 * 1000000000
+    GLONASS_CONSTELLATION = 3
+
+    def __init__(self, lines, timeline):
+        """Group Raw rows by receiver timestamp and align them with Fixes."""
+        self.timeline = timeline
+        self.header = next(
+            (line.rstrip('\n') for line in lines
+             if line.startswith('# Raw,')),
+            '')
+        epochs = {}
         for line in lines:
-            if line.startswith(prefix):
-                self.lines.append(line.strip('\n'))
+            if not line.startswith('Raw,'):
+                continue
+            values = line.rstrip('\n').split(',')
+            if len(values) != 37:
+                raise ValueError('Raw measurement must contain 37 fields')
+            timestamp_ms = int(values[1])
+            epochs.setdefault(timestamp_ms, []).append(values)
 
-    def next(self):
-        line = ''
-        if len(self.lines) > 0:
-            line = self.lines[self.idx]
-            self.idx = (self.idx + 1) % len(self.lines)
-        return line
+        self.samples = sorted(epochs.items())
+        if self.samples and not self.header:
+            raise ValueError('Raw measurement header is required')
+        self.offsets_ms = [
+            timestamp_ms - timeline.samples[0][0]
+            for timestamp_ms, _ in self.samples
+        ]
+        if self.samples and (
+                self.offsets_ms[0] < 0 or
+                self.offsets_ms[-1] >= timeline.loop_duration_ms):
+            raise ValueError('Raw measurements fall outside the Fix timeline')
 
-    def __str__(self):
-        return str(self.lines)
+    @classmethod
+    def _received_time_period_nanos(cls, constellation):
+        """Return the rollover period of received satellite time."""
+        if constellation == cls.GLONASS_CONSTELLATION:
+            return cls.GLONASS_DAY_NANOS
+        return cls.GPS_WEEK_NANOS
 
-def load(input):
+    @classmethod
+    def _translate_row(cls, source, wall_time_ns, monotonic_ns):
+        """Move one recorded measurement to live clocks without phase loss."""
+        values = list(source)
+        source_wall_time_ns = int(values[1]) * 1000000
+        delta_ns = wall_time_ns - source_wall_time_ns
+        values[1] = str(wall_time_ns // 1000000)
+        values[2] = str(int(values[2]) + delta_ns)
+
+        constellation = int(values[28])
+        received_period_ns = cls._received_time_period_nanos(constellation)
+        values[14] = str((int(values[14]) + delta_ns) %
+                         received_period_ns)
+        values[36] = str(monotonic_ns)
+        return ','.join(values)
+
+    def current(self):
+        """Return the complete Raw epoch selected by current track time."""
+        if not self.samples:
+            return ''
+
+        track_time_ms = self.timeline.track_time_ms()
+        index = bisect.bisect_right(self.offsets_ms, track_time_ms) - 1
+        if index < 0:
+            index = 0
+
+        wall_time_ns = self.timeline.wall_time_ns()
+        monotonic_ns = int(self.timeline.monotonic() * 1000000000)
+        rows = [
+            self._translate_row(row, wall_time_ns, monotonic_ns)
+            for row in self.samples[index][1]
+        ]
+        return '\n'.join([self.header, *rows])
+
+
+class FixReplay(object):
+    """Replay and interpolate GPS fixes on a request-independent timeline."""
+
+    EARTH_RADIUS_METERS = 6371000.0
+    INTERPOLATED_FIELDS = (2, 3, 4, 6, 12)
+
+    def __init__(self, lines, playback_rate=1.0, max_speed_mps=None,
+                 minimum_bearing_accuracy_degrees=None,
+                 monotonic=time.monotonic, wall_time_ns=time.time_ns):
+        """Load ordered GPS fixes and configure their effective replay rate."""
+        if not math.isfinite(playback_rate) or playback_rate <= 0:
+            raise ValueError(
+                'playback rate must be finite and greater than zero')
+        if (max_speed_mps is not None and
+                (not math.isfinite(max_speed_mps) or max_speed_mps <= 0)):
+            raise ValueError(
+                'maximum speed must be finite and greater than zero')
+        if (minimum_bearing_accuracy_degrees is not None and
+                (not math.isfinite(minimum_bearing_accuracy_degrees) or
+                 minimum_bearing_accuracy_degrees < 0)):
+            raise ValueError(
+                'minimum bearing accuracy must be finite and non-negative')
+
+        self.monotonic = monotonic
+        self.wall_time_ns = wall_time_ns
+        self.minimum_bearing_accuracy_degrees = minimum_bearing_accuracy_degrees
+        self.samples = []
+
+        for line in lines:
+            if not line.startswith('Fix,GPS,'):
+                continue
+
+            values = line.rstrip('\n').split(',')
+            if len(values) < 13:
+                raise ValueError('GPS fix must contain at least 13 fields')
+            self.samples.append((int(values[8]), values))
+
+        if len(self.samples) < 2:
+            raise ValueError('at least two GPS fixes are required')
+
+        timestamps = [sample[0] for sample in self.samples]
+        if any(current <= previous
+               for previous, current in zip(timestamps, timestamps[1:])):
+            raise ValueError('GPS fix timestamps must be strictly increasing')
+
+        self.offsets_ms = [timestamp - timestamps[0]
+                           for timestamp in timestamps]
+        intervals_ms = [current - previous
+                        for previous, current in zip(timestamps,
+                                                     timestamps[1:])]
+        intervals_ms.sort()
+        loop_interval_ms = intervals_ms[len(intervals_ms) // 2]
+        self.loop_duration_ms = self.offsets_ms[-1] + loop_interval_ms
+
+        reported_max_speed_mps = max(float(values[5])
+                                     for _, values in self.samples)
+        trajectory_speeds_mps = []
+        for previous, current in zip(self.samples, self.samples[1:]):
+            interval_seconds = (current[0] - previous[0]) / 1000.0
+            trajectory_speeds_mps.append(
+                self._distance_meters(previous[1], current[1]) /
+                interval_seconds)
+        trajectory_max_speed_mps = max(trajectory_speeds_mps)
+        self.source_max_speed_mps = max(reported_max_speed_mps,
+                                        trajectory_max_speed_mps)
+        if max_speed_mps is not None and self.source_max_speed_mps > 0:
+            playback_rate = min(playback_rate,
+                                max_speed_mps / self.source_max_speed_mps)
+
+        self.playback_rate = playback_rate
+        self.started_at = self.monotonic()
+
+    @staticmethod
+    def _format(value):
+        """Format a floating-point CSV field without redundant zeroes."""
+        return ('%.9f' % value).rstrip('0').rstrip('.')
+
+    @staticmethod
+    def _interpolate(start, end, fraction):
+        """Linearly interpolate one numeric field between adjacent fixes."""
+        return start + (end - start) * fraction
+
+    @classmethod
+    def _distance_meters(cls, start, end):
+        """Calculate great-circle distance between two Fix CSV records."""
+        start_latitude = math.radians(float(start[2]))
+        end_latitude = math.radians(float(end[2]))
+        latitude_delta = end_latitude - start_latitude
+        longitude_delta = math.radians(float(end[3]) - float(start[3]))
+        haversine = (math.sin(latitude_delta / 2.0) ** 2 +
+                     math.cos(start_latitude) * math.cos(end_latitude) *
+                     math.sin(longitude_delta / 2.0) ** 2)
+        return 2.0 * cls.EARTH_RADIUS_METERS * math.asin(
+            math.sqrt(haversine))
+
+    @staticmethod
+    def _interpolate_bearing(start, end, fraction):
+        """Interpolate heading along the shortest path around 360 degrees."""
+        delta = (end - start + 180.0) % 360.0 - 180.0
+        return (start + delta * fraction) % 360.0
+
+    def track_time_ms(self, monotonic_now=None):
+        """Map elapsed monotonic time into the looping recorded timeline."""
+        if monotonic_now is None:
+            monotonic_now = self.monotonic()
+        elapsed_ms = ((monotonic_now - self.started_at) * 1000.0 *
+                      self.playback_rate)
+        return elapsed_ms % self.loop_duration_ms
+
+    def current(self):
+        """Return an interpolated GPS Fix stamped with current live clocks."""
+        monotonic_now = self.monotonic()
+        track_time_ms = self.track_time_ms(monotonic_now)
+
+        index = bisect.bisect_right(self.offsets_ms, track_time_ms) - 1
+        next_index = (index + 1) % len(self.samples)
+        segment_start_ms = self.offsets_ms[index]
+        if next_index == 0:
+            segment_end_ms = self.loop_duration_ms
+        else:
+            segment_end_ms = self.offsets_ms[next_index]
+        fraction = ((track_time_ms - segment_start_ms) /
+                    (segment_end_ms - segment_start_ms))
+
+        start = self.samples[index][1]
+        end = self.samples[next_index][1]
+        values = list(start)
+
+        for field in self.INTERPOLATED_FIELDS:
+            values[field] = self._format(self._interpolate(
+                float(start[field]), float(end[field]), fraction))
+
+        speed_mps = self._interpolate(float(start[5]), float(end[5]),
+                                      fraction)
+        values[5] = self._format(speed_mps * self.playback_rate)
+        values[7] = self._format(self._interpolate_bearing(
+            float(start[7]), float(end[7]), fraction))
+
+        speed_accuracy_mps = self._interpolate(
+            float(start[9]), float(end[9]), fraction)
+        values[9] = self._format(speed_accuracy_mps * self.playback_rate)
+        bearing_accuracy_degrees = self._interpolate(
+            float(start[10]), float(end[10]), fraction)
+        if self.minimum_bearing_accuracy_degrees is not None:
+            bearing_accuracy_degrees = max(
+                bearing_accuracy_degrees,
+                self.minimum_bearing_accuracy_degrees)
+        values[10] = self._format(bearing_accuracy_degrees)
+
+        values[8] = str(self.wall_time_ns() // 1000000)
+        values[11] = str(int(monotonic_now * 1000000000))
+        return ','.join(values)
+
+
+def load(input, playback_rate=1.0, max_speed_mps=None,
+         minimum_bearing_accuracy_degrees=None):
     with open(input) as f:
         lines = f.readlines()
-        return {'locations' : DataStore('Fix', lines),
-                'measurements' : DataStore('Raw', lines)}
+        locations = FixReplay(
+            lines,
+            playback_rate=playback_rate,
+            max_speed_mps=max_speed_mps,
+            minimum_bearing_accuracy_degrees=(
+                minimum_bearing_accuracy_degrees))
+        return {'locations': locations,
+                'measurements': RawMeasurementReplay(lines, locations)}
 
 class CommandLoop(object):
     END_OF_RESPONSE = b'\n\n\n\n'
@@ -88,17 +311,34 @@ def main():
     parser = argparse.ArgumentParser(description="GNSS mock host agent")
     parser.add_argument('--socket', '-s', action='store', required=True, help='The UNIX socket to interact with')
     parser.add_argument('--input', '-i', action='store', required=True, help='The file with fix information to send over')
+    parser.add_argument('--playback-rate', type=float, default=1.0,
+                        help='Recorded-time seconds advanced per real second')
+    parser.add_argument('--max-speed-mps', type=float,
+                        help='Slow replay enough to keep every fix below this speed')
+    parser.add_argument('--minimum-bearing-accuracy-degrees', type=float,
+                        help='Runtime floor for unavailable bearing accuracy')
 
     args = parser.parse_args()
 
     sk = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
     sk.connect(args.socket)
 
-    data = load(args.input)
+    data = load(
+        args.input,
+        playback_rate=args.playback_rate,
+        max_speed_mps=args.max_speed_mps,
+        minimum_bearing_accuracy_degrees=(
+            args.minimum_bearing_accuracy_degrees))
+
+    print('Loaded %d GPS fixes; playback rate %.6f; cycle %.3f seconds' %
+          (len(data['locations'].samples), data['locations'].playback_rate,
+           data['locations'].loop_duration_ms /
+           data['locations'].playback_rate / 1000.0))
 
     loop = CommandLoop(sk)
-    loop.command(b'CMD_GET_LOCATION', lambda: data['locations'].next())
-    loop.command(b'CMD_GET_RAWMEASUREMENT', lambda: data['measurements'].next())
+    loop.command(b'CMD_GET_LOCATION', lambda: data['locations'].current())
+    loop.command(b'CMD_GET_RAWMEASUREMENT',
+                 lambda: data['measurements'].current())
 
     loop.loop()
 
