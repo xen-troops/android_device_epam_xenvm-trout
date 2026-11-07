@@ -21,7 +21,7 @@ bitbake-layers add-layer meta-clang meta-google
 ### GNSS replay unit tests
 
 Run the replay tests from the root of the `android_device_epam_xenvm-trout`
-repository. They load the recipe's Python source and replay fixture
+repository. They load the recipe's Python source and compressed fixture
 directly, so a configured Yocto build directory is not required.
 
 ```sh
@@ -31,5 +31,5 @@ PYTHONDONTWRITEBYTECODE=1 python3 -m unittest -v \
 
 The tests exercise fragmented and coalesced newline-delimited requests,
 complete response framing, unknown commands, and connection shutdown.
-These tests cover monotonic Fix replay, runtime clock refresh, speed and
-accuracy limits, and Raw replay behavior.
+They also cover the shared Fix/Raw replay timeline, clock translation,
+runtime speed and accuracy limits, and the contents of the packaged dataset.

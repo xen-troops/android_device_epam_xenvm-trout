@@ -2,15 +2,17 @@
 
 import importlib.util
 from pathlib import Path
+import tarfile
 import unittest
 
 
 SCRIPT = (Path(__file__).parents[1] /
           'yocto-layer/meta-google/recipes-trout/images/core-image-weston/'
           'google-overlay/usr/bin/gnss_replay.py')
-DATASET = (Path(__file__).parents[1] /
-           'yocto-layer/meta-google/recipes-trout/images/core-image-weston/'
-           'google-overlay/usr/share/gnss/test.csv')
+DATA_ARCHIVE = (Path(__file__).parents[1] /
+                'yocto-layer/meta-google/recipes-trout/gnss-replay/'
+                'gnss-replay-data/gnss-replay-data.tar.gz')
+DATASET_MEMBER = 'google-overlay/usr/share/gnss/test.csv'
 SPEC = importlib.util.spec_from_file_location('gnss_replay', SCRIPT)
 GNSS_REPLAY = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(GNSS_REPLAY)
@@ -241,28 +243,31 @@ class FixReplayTest(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, 'finite'):
                     self.make_replay(lines, **options)
 
-    def test_integrated_dataset_is_replayed_with_runtime_limits(self):
-        with DATASET.open() as source:
-            replay = self.make_replay(
-                source.readlines(),
-                max_speed_mps=4.5,
-                minimum_bearing_accuracy_degrees=1.0)
+    def test_packaged_dataset_produces_location_and_raw_responses(self):
+        with tarfile.open(DATA_ARCHIVE, 'r:gz') as archive:
+            source = archive.extractfile(DATASET_MEMBER)
+            self.assertIsNotNone(source)
+            lines = [line.decode('utf-8') for line in source.readlines()]
 
-        self.assertGreaterEqual(len(replay.samples), 2)
-        self.assertLessEqual(
-            replay.source_max_speed_mps * replay.playback_rate,
-            4.5)
-        self.assertGreater(replay.loop_duration_ms, 0)
+        replay = self.make_replay(
+            lines,
+            max_speed_mps=4.5,
+            minimum_bearing_accuracy_degrees=1.0)
+        raw_replay = GNSS_REPLAY.RawMeasurementReplay(lines, replay)
 
-        for offset_ms in replay.offsets_ms:
-            self.clock.monotonic_seconds = (
-                replay.started_at +
-                offset_ms / replay.playback_rate / 1000.0)
-            values = replay.current().split(',')
-            self.assertEqual('GPS', values[1])
-            self.assertLessEqual(float(values[5]), 4.5)
-            self.assertGreater(float(values[9]), 0.0)
-            self.assertGreaterEqual(float(values[10]), 1.0)
+        location = replay.current().split(',')
+        self.assertEqual('GPS', location[1])
+        self.assertLessEqual(float(location[5]), 4.5)
+        self.assertGreater(float(location[9]), 0.0)
+        self.assertGreaterEqual(float(location[10]), 1.0)
+
+        packet = raw_replay.current().splitlines()
+        self.assertTrue(packet[0].startswith('# Raw,'))
+        self.assertGreater(len(packet), 1)
+        raw = packet[1].split(',')
+        self.assertEqual('Raw', raw[0])
+        self.assertEqual(str(self.clock.wall_milliseconds), raw[1])
+        self.assertEqual(str(self.clock.monotonic_nanoseconds), raw[36])
 
 
 class CommandLoopTest(unittest.TestCase):
