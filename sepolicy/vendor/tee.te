@@ -5,6 +5,9 @@ allow tee vendor_data_file:dir create_dir_perms;
 allow tee vendor_data_file:file create_file_perms;
 allow tee tee_device:chr_file rw_file_perms;
 
+# Allow sockets to pass xtest socket tests
+net_domain(tee)
+
 type tee-supp, domain;
 type tee-supp_exec, exec_type, file_type, vendor_file_type;
 
