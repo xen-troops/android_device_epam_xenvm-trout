@@ -157,6 +157,7 @@ $(error Unsupported CAMERA_HAL_TYPE '$(CAMERA_HAL_TYPE)', expected 'c2' or 'evs'
 endif
 
 $(call inherit-product, device/epam/aosp-xenvm-trout/build/graphics.mk)
+LOCAL_GNSS_PRODUCT_PACKAGE = com.android.hardware.gnss.xenvm
 $(call inherit-product, device/google/trout/aosp_trout_arm64.mk)
 $(call inherit-product, device/epam/aosp-xenvm-trout/aosp_xenvm_trout_common.mk)
 $(call inherit-product, device/epam/aosp-xenvm-trout/optee/optee.mk)
