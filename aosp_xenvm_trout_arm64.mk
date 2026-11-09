@@ -174,3 +174,7 @@ LOCAL_BT_PROPERTIES = \
 PRODUCT_NAME := aosp_xenvm_trout_arm64
 PRODUCT_DEVICE := xenvm_trout_arm64
 PRODUCT_MODEL := xenvm arm64 trout
+
+# Ship compressed APEXes (.capex) like GSI does, so that the platform is
+# exercised with the same APEX format as the generic system image.
+PRODUCT_COMPRESSED_APEX := true
