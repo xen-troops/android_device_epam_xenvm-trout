@@ -116,6 +116,50 @@ class RawMeasurementReplay(object):
         return '\n'.join([self.header, *rows])
 
 
+class SvStatusReplay(object):
+    """Publish a deterministic satellite sky through the backend protocol."""
+
+    HEADER = ('# SvStatus,Svid,ConstellationType,Cn0DbHz,BasebandCn0DbHz,'
+              'ElevationDegrees,AzimuthDegrees,CarrierFrequencyHz,CodeType,'
+              'SvFlags,ElapsedRealtimeFlags,ElapsedRealtimeNanos,'
+              'ElapsedRealtimeUncertaintyNanos')
+    ALL_AVAILABLE_AND_USED = 15
+    ELAPSED_REALTIME_FLAGS = 3
+    ELAPSED_REALTIME_UNCERTAINTY_NS = 1000000
+    SATELLITES = (
+        (3, 1, 32.5, 27.5, 59.1, 166.5, 1575420000, 'C'),
+        (5, 1, 27.0, 22.0, 29.0, 56.5, 1575420000, 'C'),
+        (17, 1, 30.5, 25.5, 71.0, 77.0, 1176450000, 'I'),
+        (26, 1, 24.1, 19.1, 28.0, 253.0, 1176450000, 'I'),
+        (2, 6, 33.5, 27.5, 59.1, 166.5, 1575420000, 'C'),
+        (4, 6, 28.0, 22.0, 29.0, 56.5, 1575420000, 'C'),
+        (10, 6, 35.5, 25.5, 71.0, 77.0, 1575420000, 'C'),
+        (29, 6, 34.1, 19.1, 28.0, 253.0, 1575420000, 'C'),
+        (5, 3, 20.5, 15.5, 11.5, 116.0, 1602000000, 'C'),
+        (17, 3, 21.5, 16.5, 28.5, 186.0, 1602000000, 'C'),
+        (18, 3, 28.3, 25.3, 38.8, 69.0, 1602000000, 'C'),
+        (10, 3, 25.0, 20.0, 66.0, 247.0, 1602000000, 'I'),
+        (3, 7, 22.0, 19.7, 35.0, 112.0, 1176450000, 'I'),
+    )
+
+    def __init__(self, monotonic=time.monotonic):
+        self.monotonic = monotonic
+
+    def current(self):
+        elapsed_realtime_ns = int(self.monotonic() * 1000000000)
+        rows = []
+        for satellite in self.SATELLITES:
+            values = (
+                'SvStatus', *satellite,
+                self.ALL_AVAILABLE_AND_USED,
+                self.ELAPSED_REALTIME_FLAGS,
+                elapsed_realtime_ns,
+                self.ELAPSED_REALTIME_UNCERTAINTY_NS,
+            )
+            rows.append(','.join(str(value) for value in values))
+        return '\n'.join([self.HEADER, *rows])
+
+
 class FixReplay(object):
     """Replay and interpolate GPS fixes on a request-independent timeline."""
 
@@ -281,7 +325,8 @@ def load(input, playback_rate=1.0, max_speed_mps=None,
             minimum_bearing_accuracy_degrees=(
                 minimum_bearing_accuracy_degrees))
         return {'locations': locations,
-                'measurements': RawMeasurementReplay(lines, locations)}
+                'measurements': RawMeasurementReplay(lines, locations),
+                'sv_status': SvStatusReplay(locations.monotonic)}
 
 class CommandLoop(object):
     END_OF_RESPONSE = b'\n\n\n\n'
@@ -392,6 +437,7 @@ def main():
     loop.command(b'CMD_GET_LOCATION', lambda: data['locations'].current())
     loop.command(b'CMD_GET_RAWMEASUREMENT',
                  lambda: data['measurements'].current())
+    loop.command(b'CMD_GET_SV_STATUS', lambda: data['sv_status'].current())
 
     measurement_config = MeasurementConfig()
     loop.command(b'CMD_SET_MEASUREMENT_CONFIG', measurement_config.update,

@@ -37,7 +37,8 @@ These tests cover:
 - live clock and timestamp translation;
 - measurement-session control;
 - runtime speed and accuracy limits;
-- the contents of the packaged dataset.
+- the contents of the packaged dataset;
+- deterministic satellite status.
 
 ### GNSS backend protocol
 
@@ -45,6 +46,7 @@ The Android GNSS HAL sends these commands over the GNSS virtio-console port:
 
 - `CMD_GET_LOCATION\n`
 - `CMD_GET_RAWMEASUREMENT\n`
+- `CMD_GET_SV_STATUS\n`
 - `CMD_SET_MEASUREMENT_CONFIG,<full-tracking>,<correlation-vectors>,<interval-ms>\n`
 - `CMD_STOP_MEASUREMENT\n`
 
@@ -59,3 +61,14 @@ must stop receiver measurement acquisition before acknowledging
 `CMD_STOP_MEASUREMENT`. Both commands are idempotent: retrying the same
 configuration keeps that configuration active, and stopping an already stopped
 session still returns `OK`.
+
+`CMD_GET_SV_STATUS` returns one CSV epoch. Its header and every record use this
+schema:
+
+```text
+# SvStatus,Svid,ConstellationType,Cn0DbHz,BasebandCn0DbHz,ElevationDegrees,AzimuthDegrees,CarrierFrequencyHz,CodeType,SvFlags,ElapsedRealtimeFlags,ElapsedRealtimeNanos,ElapsedRealtimeUncertaintyNanos
+```
+
+The replay service publishes a deterministic 13-signal sky matching the AOSP
+default HAL test data. A hardware backend should populate the same schema from
+the receiver's navigation engine.

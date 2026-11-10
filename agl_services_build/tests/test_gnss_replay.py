@@ -164,6 +164,29 @@ class RawMeasurementReplayTest(unittest.TestCase):
         self.assertEqual('', replay.current())
 
 
+class SvStatusReplayTest(unittest.TestCase):
+    def test_replay_returns_stable_sky_with_live_elapsed_realtime(self):
+        clock = Clock()
+        replay = GNSS_REPLAY.SvStatusReplay(clock.monotonic)
+
+        first = replay.current().splitlines()
+        self.assertTrue(first[0].startswith('# SvStatus,'))
+        self.assertEqual(13, len(first[1:]))
+        self.assertEqual(['3', '1', '32.5', '27.5'],
+                         first[1].split(',')[1:5])
+        self.assertEqual('15', first[1].split(',')[9])
+        self.assertEqual(str(clock.monotonic_nanoseconds),
+                         first[1].split(',')[11])
+
+        clock.advance(1.0)
+        second = replay.current().splitlines()
+        self.assertEqual(
+            [row.split(',')[1:11] for row in first[1:]],
+            [row.split(',')[1:11] for row in second[1:]])
+        self.assertEqual(str(clock.monotonic_nanoseconds),
+                         second[1].split(',')[11])
+
+
 class FixReplayTest(unittest.TestCase):
     def make_replay(self, lines, **kwargs):
         self.clock = Clock()
@@ -283,24 +306,31 @@ class FixReplayTest(unittest.TestCase):
         self.assertEqual(str(self.clock.wall_milliseconds), raw[1])
         self.assertEqual(str(self.clock.monotonic_nanoseconds), raw[36])
 
+        sv_status = GNSS_REPLAY.SvStatusReplay(
+            self.clock.monotonic).current().splitlines()
+        self.assertTrue(sv_status[0].startswith('# SvStatus,'))
+        self.assertEqual(13, len(sv_status[1:]))
+
 
 class CommandLoopTest(unittest.TestCase):
     def test_stream_commands_may_be_fragmented_or_coalesced(self):
         sk = FakeSocket([
             b'CMD_GET_',
             b'LOCATION\nCMD_GET_RAW',
-            b'MEASUREMENT\n',
+            b'MEASUREMENT\nCMD_GET_SV_STATUS\n',
             b'',
         ])
         loop = GNSS_REPLAY.CommandLoop(sk)
         loop.command(b'CMD_GET_LOCATION', lambda: 'fix')
         loop.command(b'CMD_GET_RAWMEASUREMENT', lambda: 'raw')
+        loop.command(b'CMD_GET_SV_STATUS', lambda: 'sv')
 
         loop.loop()
 
         self.assertEqual([
             b'fix\n\n\n\n',
             b'raw\n\n\n\n',
+            b'sv\n\n\n\n',
         ], sk.responses)
 
     def test_unknown_command_returns_empty_framed_response(self):
