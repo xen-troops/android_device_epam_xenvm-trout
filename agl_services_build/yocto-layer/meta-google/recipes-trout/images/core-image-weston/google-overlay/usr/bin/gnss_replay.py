@@ -34,6 +34,10 @@ class RawMeasurementReplay(object):
     GPS_WEEK_NANOS = 604800 * 1000000000
     GLONASS_DAY_NANOS = 86400 * 1000000000
     GLONASS_CONSTELLATION = 3
+    DEFAULT_CODE_TYPES = {
+        1: 'C',  # GPS L1 C/A
+        3: 'C',  # GLONASS G1 C/A
+    }
 
     def __init__(self, lines, timeline):
         """Group Raw rows by receiver timestamp and align them with Fixes."""
@@ -84,6 +88,8 @@ class RawMeasurementReplay(object):
         received_period_ns = cls._received_time_period_nanos(constellation)
         values[14] = str((int(values[14]) + delta_ns) %
                          received_period_ns)
+        if not values[35]:
+            values[35] = cls.DEFAULT_CODE_TYPES.get(constellation, 'UNKNOWN')
         values[36] = str(monotonic_ns)
         return ','.join(values)
 

@@ -71,7 +71,8 @@ def fix(provider, timestamp_ms, latitude, longitude, speed_mps, bearing,
 # ReceivedSvTimeNanos, Cn0DbHz, PseudorangeRateMetersPerSecond,
 # CarrierFrequencyHz, ConstellationType, and ChipsetElapsedRealtimeNanos.
 # Rows with the same utcTimeMillis form one receiver epoch.
-def raw(timestamp_ms, received_time_nanos, constellation=1, svid=1):
+def raw(timestamp_ms, received_time_nanos, constellation=1, svid=1,
+        code_type=''):
     values = [''] * 37
     values[0] = 'Raw'
     values[1] = str(timestamp_ms)
@@ -95,6 +96,7 @@ def raw(timestamp_ms, received_time_nanos, constellation=1, svid=1):
     values[28] = str(constellation)
     values[29] = '-1'
     values[30] = '35'
+    values[35] = code_type
     values[36] = '123'
     return ','.join(values) + '\n'
 
@@ -143,6 +145,18 @@ class RawMeasurementReplayTest(unittest.TestCase):
         self.assertEqual(phase(source), phase(result))
         self.assertEqual(str(self.clock.wall_milliseconds), result[1])
         self.assertEqual(str(self.clock.monotonic_nanoseconds), result[36])
+
+    def test_replay_supplies_missing_code_type_without_overwriting_source(self):
+        replay = self.make_replay([
+            raw(1000, 100, constellation=1, svid=1),
+            raw(1000, 200, constellation=3, svid=2),
+            raw(1000, 300, constellation=6, svid=3),
+            raw(1000, 400, constellation=1, svid=4, code_type='L5Q'),
+        ])
+
+        rows = [line.split(',') for line in replay.current().splitlines()[1:]]
+        self.assertEqual(['C', 'C', 'UNKNOWN', 'L5Q'],
+                         [row[35] for row in rows])
 
     def test_empty_replay_returns_empty_response(self):
         replay = self.make_replay([])
