@@ -29,7 +29,33 @@ PYTHONDONTWRITEBYTECODE=1 python3 -m unittest -v \
     agl_services_build/tests/test_gnss_replay.py
 ```
 
-The tests exercise fragmented and coalesced newline-delimited requests,
-complete response framing, unknown commands, and connection shutdown.
-They also cover the shared Fix/Raw replay timeline, clock translation,
-runtime speed and accuracy limits, and the contents of the packaged dataset.
+These tests cover:
+
+- fragmented and coalesced newline-delimited requests;
+- complete response framing, unknown commands, and connection shutdown;
+- the shared Fix/Raw replay timeline;
+- live clock and timestamp translation;
+- measurement-session control;
+- runtime speed and accuracy limits;
+- the contents of the packaged dataset.
+
+### GNSS backend protocol
+
+The Android GNSS HAL sends these commands over the GNSS virtio-console port:
+
+- `CMD_GET_LOCATION\n`
+- `CMD_GET_RAWMEASUREMENT\n`
+- `CMD_SET_MEASUREMENT_CONFIG,<full-tracking>,<correlation-vectors>,<interval-ms>\n`
+- `CMD_STOP_MEASUREMENT\n`
+
+Requests are single-line commands terminated by one newline byte. Responses
+may contain multiple CSV lines and retain the existing four-newline end marker
+expected by Android `DeviceFileReader`. The `full-tracking` and
+`correlation-vectors` flags are encoded as `0` or `1`, and the interval is a
+positive integer in milliseconds.
+Configuration and stop commands return `OK` when the requested state was
+applied and `ERROR` when the configuration was rejected. A hardware backend
+must stop receiver measurement acquisition before acknowledging
+`CMD_STOP_MEASUREMENT`. Both commands are idempotent: retrying the same
+configuration keeps that configuration active, and stopping an already stopped
+session still returns `OK`.

@@ -311,6 +311,63 @@ class CommandLoopTest(unittest.TestCase):
 
         self.assertEqual([b'\n\n\n\n'], sk.responses)
 
+    def test_measurement_config_updates_session_state(self):
+        sk = FakeSocket([
+            b'CMD_SET_MEASUREMENT_CONFIG,1,0,2000\n',
+            b'',
+        ])
+        config = GNSS_REPLAY.MeasurementConfig()
+        loop = GNSS_REPLAY.CommandLoop(sk)
+        loop.command(b'CMD_SET_MEASUREMENT_CONFIG', config.update,
+                     accepts_arguments=True)
+
+        loop.loop()
+
+        self.assertTrue(config.active)
+        self.assertTrue(config.enable_full_tracking)
+        self.assertFalse(config.enable_corr_vec_outputs)
+        self.assertEqual(2000, config.interval_ms)
+        self.assertEqual([b'OK\n\n\n\n'], sk.responses)
+
+    def test_invalid_measurement_config_returns_error_and_keeps_loop_alive(self):
+        sk = FakeSocket([
+            b'CMD_SET_MEASUREMENT_CONFIG,2,0,2000\n'
+            b'CMD_GET_RAWMEASUREMENT\n',
+            b'',
+        ])
+        config = GNSS_REPLAY.MeasurementConfig()
+        loop = GNSS_REPLAY.CommandLoop(sk)
+        loop.command(b'CMD_SET_MEASUREMENT_CONFIG', config.update,
+                     accepts_arguments=True)
+        loop.command(b'CMD_GET_RAWMEASUREMENT', lambda: 'raw')
+
+        loop.loop()
+
+        self.assertFalse(config.active)
+        self.assertEqual([b'ERROR\n\n\n\n', b'raw\n\n\n\n'], sk.responses)
+
+    def test_measurement_config_requires_exactly_three_fields(self):
+        for arguments in (b',1,0,2000', b'1,0,2000,'):
+            with self.subTest(arguments=arguments):
+                config = GNSS_REPLAY.MeasurementConfig()
+
+                with self.assertRaises(ValueError):
+                    config.update(arguments)
+
+                self.assertFalse(config.active)
+
+    def test_measurement_stop_deactivates_session(self):
+        config = GNSS_REPLAY.MeasurementConfig()
+        self.assertEqual(
+            GNSS_REPLAY.COMMAND_RESPONSE_OK,
+            config.update(b'1,1,2000'))
+        self.assertTrue(config.active)
+
+        self.assertEqual(GNSS_REPLAY.COMMAND_RESPONSE_OK, config.stop())
+        self.assertFalse(config.active)
+
+        self.assertEqual(GNSS_REPLAY.COMMAND_RESPONSE_OK, config.stop())
+
 
 if __name__ == '__main__':
     unittest.main()

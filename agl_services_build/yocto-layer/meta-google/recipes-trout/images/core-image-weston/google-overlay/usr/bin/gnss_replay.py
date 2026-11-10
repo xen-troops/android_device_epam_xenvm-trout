@@ -28,6 +28,10 @@ import sys
 import socket
 import time
 
+COMMAND_RESPONSE_OK = 'OK'
+COMMAND_RESPONSE_ERROR = 'ERROR'
+
+
 class RawMeasurementReplay(object):
     """Replay complete satellite-measurement epochs on the Fix timeline."""
 
@@ -286,8 +290,8 @@ class CommandLoop(object):
         self.socket = socket
         self.commands = {}
 
-    def command(self, action, reaction):
-        self.commands[action] = reaction
+    def command(self, action, reaction, accepts_arguments=False):
+        self.commands[action] = (reaction, accepts_arguments)
 
     def loop(self):
         pending = b''
@@ -302,16 +306,59 @@ class CommandLoop(object):
                 if line_end < 0:
                     break
 
-                action = pending[:line_end]
+                line = pending[:line_end]
                 pending = pending[line_end + 1:]
-                reaction = self.commands.get(action)
-                if reaction is None:
-                    print("Unknown command '%s'" % action)
+                action, separator, arguments = line.partition(b',')
+                command = self.commands.get(action)
+                if command is None:
+                    print("Unknown command '%s'" % line)
                     self.socket.sendall(self.END_OF_RESPONSE)
                     continue
 
-                response = reaction().encode()
-                self.socket.sendall(response + self.END_OF_RESPONSE)
+                reaction, accepts_arguments = command
+                try:
+                    if separator and not accepts_arguments:
+                        raise ValueError('command does not accept arguments')
+                    if accepts_arguments:
+                        response = reaction(arguments)
+                    else:
+                        response = reaction()
+                except (TypeError, ValueError) as error:
+                    print("Command '%s' failed: %s" %
+                          (action.decode(errors='replace'), error))
+                    response = COMMAND_RESPONSE_ERROR
+                self.socket.sendall(
+                    response.encode() + self.END_OF_RESPONSE)
+
+
+class MeasurementConfig(object):
+    """Current framework measurement-session options for the backend."""
+
+    def __init__(self):
+        self.active = False
+        self.enable_full_tracking = False
+        self.enable_corr_vec_outputs = False
+        self.interval_ms = 1000
+
+    def update(self, arguments):
+        values = arguments.split(b',')
+        if len(values) != 3:
+            raise ValueError('measurement config must contain three fields')
+        full_tracking, corr_vec_outputs, interval_ms = values
+        if full_tracking not in (b'0', b'1') or corr_vec_outputs not in (b'0', b'1'):
+            raise ValueError('measurement config flags must be 0 or 1')
+        interval_ms = int(interval_ms)
+        if interval_ms <= 0:
+            raise ValueError('measurement interval must be greater than zero')
+        self.enable_full_tracking = full_tracking == b'1'
+        self.enable_corr_vec_outputs = corr_vec_outputs == b'1'
+        self.interval_ms = interval_ms
+        self.active = True
+        return COMMAND_RESPONSE_OK
+
+    def stop(self):
+        self.active = False
+        return COMMAND_RESPONSE_OK
 
 def main():
     parser = argparse.ArgumentParser(description="GNSS mock host agent")
@@ -345,6 +392,11 @@ def main():
     loop.command(b'CMD_GET_LOCATION', lambda: data['locations'].current())
     loop.command(b'CMD_GET_RAWMEASUREMENT',
                  lambda: data['measurements'].current())
+
+    measurement_config = MeasurementConfig()
+    loop.command(b'CMD_SET_MEASUREMENT_CONFIG', measurement_config.update,
+                 accepts_arguments=True)
+    loop.command(b'CMD_STOP_MEASUREMENT', measurement_config.stop)
 
     loop.loop()
 
