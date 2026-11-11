@@ -51,6 +51,8 @@ def load(input):
                 'measurements' : DataStore('Raw', lines)}
 
 class CommandLoop(object):
+    END_OF_RESPONSE = b'\n\n\n\n'
+
     def __init__(self, socket):
         self.socket = socket
         self.commands = {}
@@ -61,13 +63,17 @@ class CommandLoop(object):
     def loop(self):
         while True:
             inp = self.socket.recv(128)
-            reaction = self.commands.get(inp, None)
-            if reaction:
-                response = reaction() + '\n\n\n\n'
-                self.socket.send(str.encode(response))
-            else:
+            if not inp:
+                return
+
+            reaction = self.commands.get(inp)
+            if reaction is None:
                 print("Unknown command '%s'" % inp)
-                self.socket.send(b'\n\n\n\n')
+                self.socket.sendall(self.END_OF_RESPONSE)
+                continue
+
+            response = reaction().encode()
+            self.socket.sendall(response + self.END_OF_RESPONSE)
 
 def main():
     parser = argparse.ArgumentParser(description="GNSS mock host agent")

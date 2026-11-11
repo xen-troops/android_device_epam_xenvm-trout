@@ -17,3 +17,15 @@ bitbake-layers add-layer meta-clang meta-google
 
 ### Build
 `bitbake google-trout-agl-services`
+
+### GNSS replay unit tests
+
+Run the host-side replay tests from the repository root:
+
+```
+PYTHONDONTWRITEBYTECODE=1 python3 -m unittest -v \
+    agl_services_build/tests/test_gnss_replay.py
+```
+
+The tests cover complete response writes, unknown commands, and clean
+connection shutdown.
