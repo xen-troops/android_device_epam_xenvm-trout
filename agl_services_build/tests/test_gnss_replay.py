@@ -26,17 +26,26 @@ class FakeSocket(object):
 
 
 class CommandLoopTest(unittest.TestCase):
-    def test_complete_response_is_sent_before_clean_shutdown(self):
-        sk = FakeSocket([b'CMD_GET_LOCATION', b''])
+    def test_stream_commands_may_be_fragmented_or_coalesced(self):
+        sk = FakeSocket([
+            b'CMD_GET_',
+            b'LOCATION\nCMD_GET_RAW',
+            b'MEASUREMENT\n',
+            b'',
+        ])
         loop = GNSS_REPLAY.CommandLoop(sk)
         loop.command(b'CMD_GET_LOCATION', lambda: 'fix')
+        loop.command(b'CMD_GET_RAWMEASUREMENT', lambda: 'raw')
 
         loop.loop()
 
-        self.assertEqual([b'fix\n\n\n\n'], sk.responses)
+        self.assertEqual([
+            b'fix\n\n\n\n',
+            b'raw\n\n\n\n',
+        ], sk.responses)
 
     def test_unknown_command_returns_empty_framed_response(self):
-        sk = FakeSocket([b'UNKNOWN', b''])
+        sk = FakeSocket([b'UNKNOWN\n', b''])
         loop = GNSS_REPLAY.CommandLoop(sk)
 
         loop.loop()

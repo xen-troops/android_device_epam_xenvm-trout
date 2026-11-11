@@ -61,19 +61,28 @@ class CommandLoop(object):
         self.commands[action] = reaction
 
     def loop(self):
+        pending = b''
         while True:
-            inp = self.socket.recv(128)
-            if not inp:
+            chunk = self.socket.recv(128)
+            if not chunk:
                 return
+            pending += chunk
 
-            reaction = self.commands.get(inp)
-            if reaction is None:
-                print("Unknown command '%s'" % inp)
-                self.socket.sendall(self.END_OF_RESPONSE)
-                continue
+            while pending:
+                line_end = pending.find(b'\n')
+                if line_end < 0:
+                    break
 
-            response = reaction().encode()
-            self.socket.sendall(response + self.END_OF_RESPONSE)
+                action = pending[:line_end]
+                pending = pending[line_end + 1:]
+                reaction = self.commands.get(action)
+                if reaction is None:
+                    print("Unknown command '%s'" % action)
+                    self.socket.sendall(self.END_OF_RESPONSE)
+                    continue
+
+                response = reaction().encode()
+                self.socket.sendall(response + self.END_OF_RESPONSE)
 
 def main():
     parser = argparse.ArgumentParser(description="GNSS mock host agent")

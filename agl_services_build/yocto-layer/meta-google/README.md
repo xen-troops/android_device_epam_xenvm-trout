@@ -27,5 +27,5 @@ PYTHONDONTWRITEBYTECODE=1 python3 -m unittest -v \
     agl_services_build/tests/test_gnss_replay.py
 ```
 
-The tests cover complete response writes, unknown commands, and clean
-connection shutdown.
+The tests exercise fragmented and coalesced newline-delimited requests,
+complete response framing, unknown commands, and connection shutdown.
