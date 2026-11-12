@@ -14,11 +14,13 @@
 OPTEE_OS_DIR          := vendor/optee/optee_os
 OPTEE_TA_TARGETS      := ta_arm64
 OPTEE_CFG_ARM64_CORE  := y
-OPTEE_PLATFORM        := rcar_gen5
-OPTEE_PLATFORM_FLAVOR := X5H
+OPTEE_PLATFORM        := rcar
+OPTEE_PLATFORM_FLAVOR := ironhide_x5h
 
 # Use exactly the same options as in domd/domu optee-os
-OPTEE_EXTRA_FLAGS      = CFG_INSECURE=y RCAR_DEBUG_LOG=0 CFG_SCIF=n CFG_NS_VIRTUALIZATION=y
+OPTEE_EXTRA_FLAGS      = CFG_INSECURE=y CFG_NS_VIRTUALIZATION=y \
+                         CFG_VIRT_GUEST_COUNT=3 CFG_CORE_RESERVED_SHM=n \
+                         CFG_TEE_CORE_DEBUG=n CFG_TEE_CORE_LOG_LEVEL=1
 
 # Build the OP-TEE OS and the TAs with the AOSP prebuilt clang
 # LLVM_PREBUILTS_PATH points at the same clang
@@ -34,7 +36,7 @@ OPTEE_TOOLCHAIN_FLAGS  = COMPILER=clang \
 OPTEE_EXTRA_FLAGS     += $(OPTEE_TOOLCHAIN_FLAGS) SRECFLAGS=
 OPTEE_EXTRA_TA_FLAGS   = $(OPTEE_TOOLCHAIN_FLAGS)
 
-# Use as is configuration from xen-troops fork (based on the Renesas BSP)
+# Build rules from the OP-TEE tree itself
 BUILD_OPTEE_MK := $(OPTEE_OS_DIR)/mk/aosp_optee.mk
 
 # Enable tee-supplicant optional features to pass several xtest tests:
@@ -79,3 +81,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     5c206987-16a3-59cc-ab0f-64b9cfc9e758.ta \
     a720ccbb-51da-417d-b82e-e5445d474a7a.ta
+
+# nil-UUID TA (xtest regression_1043): OP-TEE must refuse to load it
+PRODUCT_PACKAGES += \
+    00000000-0000-0000-0000-000000000000.ta
