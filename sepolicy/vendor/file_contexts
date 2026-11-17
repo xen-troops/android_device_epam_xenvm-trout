@@ -1,5 +1,6 @@
 # Block devices labeling
 /dev/block/mmcblk0                                                              u:object_r:root_block_device:s0
+/dev/block/by-name/persist                                                      u:object_r:persist_block_device:s0
 
 # Console device
 /dev/ttySC0                                                                     u:object_r:tty_device:s0
@@ -46,7 +47,8 @@
 /vendor/bin/hw/android.hardware.thermal@1.0-service                             u:object_r:hal_thermal_default_exec:s0
 /vendor/bin/hw/android.hardware.dumpstate-service.img                           u:object_r:hal_dumpstate_default_exec:s0
 /vendor/bin/hw/android.hardware.keymaster@3.0-service.optee                     u:object_r:hal_keymaster_optee_exec:s0
-/vendor/bin/hw/android.hardware.gatekeeper@1.0-service.software                 u:object_r:hal_gatekeeper_optee_exec:s0
+/vendor/bin/hw/android\.hardware\.gatekeeper-service\.optee\.rust              u:object_r:hal_gatekeeper_optee_exec:s0
+/vendor/bin/hw/android\.hardware\.security\.keymint-service\.optee\.rust    u:object_r:hal_keymint_optee_exec:s0
 /vendor/bin/hw/android.hardware.sensors@1.0-service.xenvm_trout_arm64                       u:object_r:hal_sensors_default_exec:s0
 /vendor/bin/hw/android.hardware.health@2.0-service.xenvm_trout_arm64                        u:object_r:hal_health_default_exec:s0
 /vendor/bin/hw/android.hardware.graphics.allocator@3.0-service.xenvm_trout_arm64            u:object_r:hal_graphics_allocator_default_exec:s0
@@ -56,7 +58,7 @@
 /dev/tee0                                                                       u:object_r:tee_device:s0
 /dev/teepriv0                                                                   u:object_r:tee_device:s0
 /vendor/bin/tee-supplicant                                                      u:object_r:tee_exec:s0
-#/vendor/bin/tee-supp                                                            u:object_r:tee_exec:s0
+/mnt/vendor/persist/tee(/.*)?                                                   u:object_r:persist_tee_file:s0
 
 # audio
 /vendor/lib(64)?/hw/android.hardware.audio@2.0-impl.so                          u:object_r:same_process_hal_file:s0

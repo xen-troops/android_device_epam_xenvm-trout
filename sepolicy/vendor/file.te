@@ -13,3 +13,6 @@ type proc_pvr, fs_type, proc_type;
 type sysfs_backlight, sysfs_type, fs_type;
 type sysfs_remoteproc, sysfs_type, fs_type;
 type sysfs_block_discard, sysfs_type, fs_type;
+
+# OP-TEE REE FS storage on /mnt/vendor/persist/tee
+type persist_tee_file, file_type;

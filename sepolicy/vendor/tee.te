@@ -4,6 +4,9 @@ allow tee block_device:dir { getattr search };
 allow tee vendor_data_file:dir create_dir_perms;
 allow tee vendor_data_file:file create_file_perms;
 allow tee tee_device:chr_file rw_file_perms;
+allow tee mnt_vendor_file:dir { getattr search };
+allow tee persist_tee_file:dir create_dir_perms;
+allow tee persist_tee_file:file create_file_perms;
 
 type tee-supp, domain;
 type tee-supp_exec, exec_type, file_type, vendor_file_type;

@@ -43,6 +43,10 @@ BUILD_OPTEE_MK := $(OPTEE_OS_DIR)/mk/aosp_optee.mk
 $(call soong_config_set,optee_client,cfg_gp_sockets,true)
 $(call soong_config_set,optee_client,cfg_tee_supp_plugins,true)
 
+# Keep the REE FS secure storage off /data: the TAs of early_hal services
+# (KeyMint) open it before /data is mounted
+$(call soong_config_set,optee_client,cfg_tee_fs_parent_path,/mnt/vendor/persist/tee)
+
 PRODUCT_PACKAGES += \
         tee-supplicant \
         libteec
@@ -79,3 +83,32 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     5c206987-16a3-59cc-ab0f-64b9cfc9e758.ta \
     a720ccbb-51da-417d-b82e-e5445d474a7a.ta
+
+# Gatekeeper HAL backed by the OP-TEE Rust Gatekeeper TA
+# (replaces the cuttlefish gatekeeper APEXes, see phony_override/Android.mk)
+PRODUCT_PACKAGES += android.hardware.gatekeeper-service.optee.rust
+
+# Gatekeeper TA (Rust) used by the HAL above
+PRODUCT_PACKAGES += 4d573443-6a56-4272-ac6f-2425af9ef9bb.ta
+
+# VTS GateKeeper test binary (for on-device debugging)
+PRODUCT_PACKAGES_DEBUG += VtsHalGatekeeperTargetTest
+
+# KeyMint HAL (IKeyMintDevice, IRemotelyProvisionedComponent, ISecureClock,
+# ISharedSecret) backed by the OP-TEE Rust KeyMint TA
+# (replaces the cuttlefish keymint APEXes, see phony_override/Android.mk)
+PRODUCT_PACKAGES += android.hardware.security.keymint-service.optee.rust
+
+# KeyMint TA (Rust) used by the HAL above
+PRODUCT_PACKAGES += dba51a17-0563-11e7-93b1-6fa7b0071a51.ta
+
+# Provisions the KeyMint attestation IDs, once per device
+PRODUCT_PACKAGES += keymint-optee-provision-ids
+
+# VTS KeyMint, SecureClock, SharedSecret and RemotelyProvisionedComponent
+# test binaries (for on-device debugging)
+PRODUCT_PACKAGES_DEBUG += \
+    VtsAidlKeyMintTargetTest \
+    VtsAidlSecureClockTargetTest \
+    VtsAidlSharedSecretTargetTest \
+    VtsHalRemotelyProvisionedComponentTargetTest
