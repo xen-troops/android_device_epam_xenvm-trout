@@ -7,6 +7,8 @@ service dispfw_fe /vendor/bin/dfw.sh
 on early-init
     start dispfw_fe
 
+on property:apex.all.ready=true && property:vendor.dfw.display_ready=1
+    restart vendor.hwcomposer-3
 
 on property:sys.boot_completed=1
     stop seriallogging

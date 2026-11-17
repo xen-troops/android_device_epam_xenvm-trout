@@ -44,3 +44,4 @@ allow dfw_setup hal_graphics_composer_default_exec:file { rx_file_perms execute_
 
 # default value of vendor.hwc.drm.device comes from /vendor/build.prop
 set_prop(vendor_init, vendor_hwc_drm_prop)
+set_prop(dfw_setup, vendor_dfw_prop)

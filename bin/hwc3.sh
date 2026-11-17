@@ -37,7 +37,5 @@ if [ "$found" -eq 1 ]; then
     card_node=$(echo "$st" | sed 's|/sys/class/drm/\(card[0-9]*\)-.*|\1|')
     setprop vendor.hwc.drm.device "/dev/dri/$card_node"
     log -t dfw "Display card detected, will use vendor.hwc.drm.device = /dev/dri/$card_node"
+    setprop vendor.dfw.display_ready 1
 fi
-
-stop vendor.hwcomposer-3
-start vendor.hwcomposer-3
