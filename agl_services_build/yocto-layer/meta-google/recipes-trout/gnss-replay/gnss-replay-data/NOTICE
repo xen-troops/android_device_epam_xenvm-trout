@@ -1,0 +1,26 @@
+GNSS replay data attribution
+============================
+
+The replay fixture is adapted from the GEDVM Smartphone GNSS Vehicle
+Manoeuvre Dataset by Yang Jiang, Yan Zhang, Zhitao Lyu, Zelin Zhou,
+Hongzhou Yang, and Yang Gao:
+
+https://github.com/YangRiverJiang/gedvm_dataset
+
+Source revision: e2966fb40f89f009a4cc6c5282f2decdb1fe7035
+
+The source dataset is licensed under Creative Commons Attribution 4.0
+International:
+
+https://creativecommons.org/licenses/by/4.0/
+
+Changes made for this product fixture: a ten-minute interval was selected;
+the older Android Raw record layout was expanded to the current 37-field
+layout; UTC and elapsed-realtime fields were normalized; and bearing plus
+accuracy fields required by the replay interface were derived.
+
+Associated publication:
+
+Yang Jiang et al., "Accurate Vehicle Maneuver Analysis Using Smartphone GNSS
+Carrier-Phase Measurements," IEEE Transactions on Intelligent Transportation
+Systems, 2025. https://doi.org/10.1109/TITS.2025.3606211

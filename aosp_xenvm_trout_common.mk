@@ -54,6 +54,6 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_PACKAGE_OVERLAYS += device/epam/aosp-xenvm-trout/overlay
 
-PRODUCT_VENDOR_PROPERTIES += vendor.ser.gnss-uart=/dev/vport6p2
+PRODUCT_VENDOR_PROPERTIES += vendor.ser.gnss-uart=/dev/vport2p2
 
 PRODUCT_PACKAGES += xenvm_overlay_connectivity
