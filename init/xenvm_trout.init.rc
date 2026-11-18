@@ -13,6 +13,13 @@ on property:apex.all.ready=true && property:vendor.dfw.display_ready=1
 on property:sys.boot_completed=1
     stop seriallogging
 
+service seriallogging /system/bin/logcat -b all -v threadtime -f /dev/vport2p6 *:V
+    class main
+    user logd
+    group root logd
+    seclabel u:r:logpersist:s0
+    override
+
 service tee-supplicant /vendor/bin/tee-supplicant
     class early_hal
     user root
