@@ -24,3 +24,4 @@
 /dev/dma_heap/reserved  0666    system       system
 /dev/dma_heap/system  0666    system       system
 /dev/dri/card1          0666    system          graphics
+/dev/vport2p6           0660    logd            logd
